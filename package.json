@@ -1,0 +1,28 @@
+{
+  "name": "watermelon-context-action",
+  "version": "1.0.0",
+  "description": "An action to get code context using Watermelon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/watermelontools/watermelon-context-action.git"
+  },
+  "keywords": [
+    "context",
+    "jira",
+    "slack",
+    "github",
+    "bitbucket",
+    "watermelon",
+    "gitlab"
+  ],
+  "author": "EstebanDalelR",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/watermelontools/watermelon-context-action/issues"
+  },
+  "homepage": "https://github.com/watermelontools/watermelon-context-action#readme"
+}
