@@ -1,0 +1,14 @@
+on: [push]
+
+jobs:
+  watermelon:
+    runs-on: ubuntu-latest
+    name: Get code context
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        id: watermelon
+        uses: ./
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
