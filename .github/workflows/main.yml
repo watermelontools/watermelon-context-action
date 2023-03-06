@@ -7,6 +7,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Hello world action step
         id: watermelon
         uses: ./
       # Use the output from the `hello` step
