@@ -13,8 +13,7 @@ try {
       user: "estebandalelr@gmail.com",
       prTitle: "WM-49: Create payments success page",
     })
-    .then((res) => res.json())
-    .then((json) => console.log(json));
+    .then((response) => console.log(response));
 } catch (error) {
   core.setFailed(error.message);
 }
