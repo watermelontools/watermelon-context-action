@@ -16316,11 +16316,11 @@ function getGithub() {
             commitList: "264ef7c1455b51f1cb65d4457aeaa700478c91f4",
         })
             .then((response) => {
-            textToWrite += "**GitHub PRs**";
+            textToWrite += "### GitHub PRs";
             for (let index = 0; index < response.data.items.length; index++) {
                 const element = response.data.items[index];
-                textToWrite += `\n[#${element.number} - ${element.title}](${element.html_url})`;
-                textToWrite += `\n--------------\n`;
+                textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
+                textToWrite += `\n`;
                 // shortcircuit to three results
                 if (index === 2) {
                     textToWrite += `and ${response.data.items.length - 3} more`;
@@ -16355,11 +16355,11 @@ function getJira() {
             prTitle: "WM-49: Create payments success page",
         })
             .then((response) => {
-            textToWrite += "**Jira Tickets**";
+            textToWrite += "### Jira Tickets";
             for (let index = 0; index < response.data.length; index++) {
                 const element = response.data[index];
-                textToWrite += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
-                textToWrite += `\n--------------\n`;
+                textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+                textToWrite += `\n`;
                 // shortcircuit to three results
                 if (index === 2) {
                     textToWrite += `and ${response.data.length - 3} more`;
@@ -16394,13 +16394,13 @@ function getSlack() {
             text: "action github",
         })
             .then((response) => {
-            textToWrite += "**Slack Treads**";
+            textToWrite += "### Slack Treads";
             for (let index = 0; index < response.data.messages.matches.length; index++) {
                 const element = response.data.messages.matches[index];
-                textToWrite += `\n[#${element.channel.name} - ${element.username}\n ${element.text.length > 100
+                textToWrite += `\n - [#${element.channel.name} - ${element.username}\n ${element.text.length > 100
                     ? element.text.substring(0, 100) + "..."
                     : element.text}](${element.permalink})`;
-                textToWrite += `\n--------------\n`;
+                textToWrite += `\n`;
                 // shortcircuit to three results
                 if (index === 2) {
                     textToWrite += `and ${response.data.messages.matches.length - 3} more`;
@@ -16424,7 +16424,7 @@ const github = __nccwpck_require__(8348);
 try {
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2);
-    let textToWrite = "";
+    let textToWrite = "## Context by Watermelon";
     console.log(`The event payload: ${payload}`);
     let getDataPromises = [getGithub(), getJira(), getSlack()];
     Promise.all(getDataPromises)
