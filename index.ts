@@ -8,12 +8,18 @@ try {
   let textToWrite = "";
   console.log(`The event payload: ${payload}`);
   let getDataPromises = [getJira()];
-  Promise.all(getDataPromises).then((values) => {
-    values.forEach((value) => {
-      textToWrite += value;
+  Promise.all(getDataPromises)
+    .then((values) => {
+      values.forEach((value) => {
+        textToWrite += value;
+      });
+    })
+    .catch((error) => {
+      console.log(error.message);
+    })
+    .finally(() => {
+      core.setOutput("textToWrite", textToWrite);
     });
-  });
-  core.setOutput("textToWrite", textToWrite);
 } catch (error) {
   core.setFailed(error.message);
 }
