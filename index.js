@@ -4,6 +4,7 @@ const axios = require("axios");
 try {
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2);
+  let textToWrite = "";
   console.log(`The event payload: ${payload}`);
   axios
     .post("http://app.watermelontools.com/api/jira/getMostRelevantJiraTicket", {
@@ -11,13 +12,13 @@ try {
       prTitle: "WM-49: Create payments success page",
     })
     .then((response) => {
-      let textToWrite = `*Jira*
-         ${response.data[0].key} ${
-        response.data[0].fields?.summary
-          ? `: ${response.data[0].fields?.summary}`
-          : ""
-      }}`;
-      core.setOutput("ghdata", textToWrite);
+      let jiraText = "**Jira**";
+      for (let index = 0; index < response.data.length; index++) {
+        const element = response.data[index];
+        jiraText += `\n${element.key} - ${element.summary}`;
+      }
+      textToWrite += jiraText;
+      core.setOutput("textToWrite", textToWrite);
     });
 } catch (error) {
   core.setFailed(error.message);
