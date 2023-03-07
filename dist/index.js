@@ -16283,9 +16283,6 @@ const core = __nccwpck_require__(2556);
 const github = __nccwpck_require__(8348);
 const axios = __nccwpck_require__(4158);
 try {
-  // `who-to-greet` input defined in action metadata file
-  const time = new Date().toTimeString();
-  core.setOutput("time", time);
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);
