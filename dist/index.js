@@ -16294,7 +16294,7 @@ var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
 
-;// CONCATENATED MODULE: ./getData/jira.ts
+;// CONCATENATED MODULE: ./getData/github.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -16305,21 +16305,55 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 const axios = __nccwpck_require__(4158);
-function getJira() {
+function getGithub() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
         yield axios
+            .post("http://app.watermelontools.com/api/github/getIssuesByCommits", {
+            user: "estebandalelr@gmail.com",
+            repo: "watermelon",
+            owner: "watermelontools",
+            commitList: "264ef7c1455b51f1cb65d4457aeaa700478c91f4",
+        })
+            .then((response) => {
+            textToWrite += "**GitHub PRs**";
+            for (let index = 0; index < response.data.items.length; index++) {
+                const element = response.data.items[index];
+                textToWrite += `\n[#${element.number} - ${element.title}](${element.html_url})`;
+            }
+        })
+            .catch((error) => {
+            console.log(error.message);
+        });
+        return textToWrite;
+    });
+}
+
+;// CONCATENATED MODULE: ./getData/jira.ts
+var jira_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+const jira_axios = __nccwpck_require__(4158);
+function getJira() {
+    return jira_awaiter(this, void 0, void 0, function* () {
+        let textToWrite = "";
+        yield jira_axios
             .post("http://app.watermelontools.com/api/jira/getMostRelevantJiraTicket", {
             user: "estebandalelr@gmail.com",
             prTitle: "WM-49: Create payments success page",
         })
             .then((response) => {
-            let jiraText = "**Jira**";
+            textToWrite += "**Jira Tickets**";
             for (let index = 0; index < response.data.length; index++) {
                 const element = response.data[index];
-                jiraText += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+                textToWrite += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
             }
-            textToWrite += jiraText;
         })
             .catch((error) => {
             console.log(error.message);
@@ -16330,6 +16364,7 @@ function getJira() {
 
 ;// CONCATENATED MODULE: ./index.ts
 
+
 const core = __nccwpck_require__(2556);
 const github = __nccwpck_require__(8348);
 try {
@@ -16337,7 +16372,7 @@ try {
     const payload = JSON.stringify(github.context.payload, undefined, 2);
     let textToWrite = "";
     console.log(`The event payload: ${payload}`);
-    let getDataPromises = [getJira()];
+    let getDataPromises = [getJira(), getGithub()];
     Promise.all(getDataPromises)
         .then((values) => {
         values.forEach((value) => {
