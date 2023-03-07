@@ -16320,6 +16320,9 @@ function getGithub() {
             for (let index = 0; index < response.data.items.length; index++) {
                 const element = response.data.items[index];
                 textToWrite += `\n[#${element.number} - ${element.title}](${element.html_url})`;
+                // shortcircuit to three results
+                if (index === 2)
+                    break;
             }
         })
             .catch((error) => {
@@ -16353,6 +16356,9 @@ function getJira() {
             for (let index = 0; index < response.data.length; index++) {
                 const element = response.data[index];
                 textToWrite += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+                // shortcircuit to three results
+                if (index === 2)
+                    break;
             }
         })
             .catch((error) => {
@@ -16386,6 +16392,9 @@ function getSlack() {
             for (let index = 0; index < response.data.messages.matches.length; index++) {
                 const element = response.data.messages.matches[index];
                 textToWrite += `\n[#${element.username} - ${element.text}](${element.permalink})`;
+                // shortcircuit to three results
+                if (index === 2)
+                    break;
             }
         })
             .catch((error) => {
