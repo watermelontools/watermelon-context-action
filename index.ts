@@ -13,6 +13,7 @@ try {
     .then((values) => {
       values.forEach((value) => {
         textToWrite += value;
+        textToWrite += "\n";
       });
     })
     .catch((error) => {
