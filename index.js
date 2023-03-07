@@ -15,7 +15,7 @@ try {
       let jiraText = "**Jira**";
       for (let index = 0; index < response.data.length; index++) {
         const element = response.data[index];
-        jiraText += `\n${element.key} - ${element.summary}`;
+        jiraText += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
       }
       textToWrite += jiraText;
       core.setOutput("textToWrite", textToWrite);
