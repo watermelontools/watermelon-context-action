@@ -11,6 +11,8 @@ export default async function getJira() {
       for (let index = 0; index < response.data.length; index++) {
         const element = response.data[index];
         textToWrite += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+        // shortcircuit to three results
+        if (index === 2) break;
       }
     })
     .catch((error) => {

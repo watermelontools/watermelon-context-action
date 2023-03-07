@@ -15,6 +15,8 @@ export default async function getSlack() {
       ) {
         const element = response.data.messages.matches[index];
         textToWrite += `\n[#${element.username} - ${element.text}](${element.permalink})`;
+        // shortcircuit to three results
+        if (index === 2) break;
       }
     })
     .catch((error) => {

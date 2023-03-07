@@ -13,6 +13,8 @@ export default async function getGithub() {
       for (let index = 0; index < response.data.items.length; index++) {
         const element = response.data.items[index];
         textToWrite += `\n[#${element.number} - ${element.title}](${element.html_url})`;
+        // shortcircuit to three results
+        if (index === 2) break;
       }
     })
     .catch((error) => {
