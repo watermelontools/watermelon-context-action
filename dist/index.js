@@ -16394,7 +16394,7 @@ function getSlack() {
             text: "action github",
         })
             .then((response) => {
-            textToWrite += "### Slack Treads";
+            textToWrite += "### Slack Threads";
             for (let index = 0; index < response.data.messages.matches.length; index++) {
                 const element = response.data.messages.matches[index];
                 textToWrite += `\n - [#${element.channel.name} - ${element.username}\n ${element.text.length > 100
@@ -16424,7 +16424,7 @@ const github = __nccwpck_require__(8348);
 try {
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2);
-    let textToWrite = "## Context by Watermelon";
+    let textToWrite = "## Context by Watermelon\n";
     console.log(`The event payload: ${payload}`);
     let getDataPromises = [getGithub(), getJira(), getSlack()];
     Promise.all(getDataPromises)
