@@ -19,8 +19,14 @@ export default async function getSlack() {
             ? element.text.substring(0, 100) + "..."
             : element.text
         }](${element.permalink})`;
+        textToWrite += `--------------\n`;
         // shortcircuit to three results
-        if (index === 2) break;
+        if (index === 2) {
+          textToWrite += `and ${
+            response.data.messages.matches.length - 3
+          } more`;
+          break;
+        }
       }
     })
     .catch((error) => {
