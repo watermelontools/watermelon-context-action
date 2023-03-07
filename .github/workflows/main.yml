@@ -6,8 +6,7 @@ jobs:
     name: Get code context
     # Map a step output to a job output
     outputs:
-      output1: ${{ steps.watermelon.outputs.test }}
-      output2: ${{ steps.watermelon.outputs.test }}
+      result: ${{ steps.watermelon.outputs.ghdata }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
