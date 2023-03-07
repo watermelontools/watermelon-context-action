@@ -10,7 +10,15 @@ try {
       user: "estebandalelr@gmail.com",
       prTitle: "WM-49: Create payments success page",
     })
-    .then((response) => core.setOutput("ghdata", response.data[0]));
+    .then((response) => {
+      let textToWrite = `*Jira*
+         ${response.data[0].key} ${
+        response.data[0].fields?.summary
+          ? `: ${response.data[0].fields?.summary}`
+          : ""
+      }}`;
+      core.setOutput("ghdata", textToWrite);
+    });
 } catch (error) {
   core.setFailed(error.message);
 }
