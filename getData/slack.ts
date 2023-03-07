@@ -7,7 +7,7 @@ export default async function getSlack() {
       text: "action github",
     })
     .then((response) => {
-      textToWrite += "### Slack Treads";
+      textToWrite += "### Slack Threads";
       for (
         let index = 0;
         index < response.data.messages.matches.length;
