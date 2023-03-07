@@ -16294,7 +16294,7 @@ try {
       user: "estebandalelr@gmail.com",
       prTitle: "WM-49: Create payments success page",
     })
-    .then((response) => console.log(response));
+    .then((response) => core.setOutput(response.data));
 } catch (error) {
   core.setFailed(error.message);
 }
