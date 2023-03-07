@@ -16415,7 +16415,7 @@ try {
     const payload = JSON.stringify(github.context.payload, undefined, 2);
     let textToWrite = "";
     console.log(`The event payload: ${payload}`);
-    let getDataPromises = [getJira(), getGithub(), getSlack()];
+    let getDataPromises = [getGithub(), getJira(), getSlack()];
     Promise.all(getDataPromises)
         .then((values) => {
         values.forEach((value) => {
