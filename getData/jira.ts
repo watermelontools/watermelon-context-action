@@ -7,12 +7,11 @@ export default async function getJira() {
       prTitle: "WM-49: Create payments success page",
     })
     .then((response) => {
-      let jiraText = "**Jira Tickets**";
+      textToWrite += "**Jira Tickets**";
       for (let index = 0; index < response.data.length; index++) {
         const element = response.data[index];
-        jiraText += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+        textToWrite += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
       }
-      textToWrite += jiraText;
     })
     .catch((error) => {
       console.log(error.message);
