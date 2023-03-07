@@ -16320,9 +16320,12 @@ function getGithub() {
             for (let index = 0; index < response.data.items.length; index++) {
                 const element = response.data.items[index];
                 textToWrite += `\n[#${element.number} - ${element.title}](${element.html_url})`;
+                textToWrite += `--------------\n`;
                 // shortcircuit to three results
-                if (index === 2)
+                if (index === 2) {
+                    textToWrite += `and ${response.data.messages.matches.length - 3} more`;
                     break;
+                }
             }
         })
             .catch((error) => {
@@ -16356,9 +16359,12 @@ function getJira() {
             for (let index = 0; index < response.data.length; index++) {
                 const element = response.data[index];
                 textToWrite += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+                textToWrite += `--------------\n`;
                 // shortcircuit to three results
-                if (index === 2)
+                if (index === 2) {
+                    textToWrite += `and ${response.data.messages.matches.length - 3} more`;
                     break;
+                }
             }
         })
             .catch((error) => {
@@ -16394,9 +16400,12 @@ function getSlack() {
                 textToWrite += `\n[#${element.channel.name} - ${element.username}\n ${element.text.length > 100
                     ? element.text.substring(0, 100) + "..."
                     : element.text}](${element.permalink})`;
+                textToWrite += `--------------\n`;
                 // shortcircuit to three results
-                if (index === 2)
+                if (index === 2) {
+                    textToWrite += `and ${response.data.messages.matches.length - 3} more`;
                     break;
+                }
             }
         })
             .catch((error) => {
