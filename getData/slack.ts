@@ -14,7 +14,11 @@ export default async function getSlack() {
         index++
       ) {
         const element = response.data.messages.matches[index];
-        textToWrite += `\n[#${element.username} - ${element.text}](${element.permalink})`;
+        textToWrite += `\n[#${element.channel.name} - ${element.username}\n ${
+          element.text.length > 100
+            ? element.text.substring(0, 100) + "..."
+            : element.text
+        }](${element.permalink})`;
         // shortcircuit to three results
         if (index === 2) break;
       }
