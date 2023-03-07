@@ -4,7 +4,8 @@
   "description": "An action to get code context using Watermelon",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -29,5 +30,8 @@
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
     "axios": "^1.3.4"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0"
   }
 }
