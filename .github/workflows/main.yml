@@ -19,9 +19,8 @@ jobs:
     name: Write a comment
     steps:
       - env:
-          OUTPUT1: ${{needs.job1.outputs.output1}}
-          OUTPUT2: ${{needs.job1.outputs.output2}}
-        run: echo "$OUTPUT1 $OUTPUT2"
+          OUTPUT1: ${{needs.job1.outputs.result}}
+        run: echo "$OUTPUT1"
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
         with:
