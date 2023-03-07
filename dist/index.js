@@ -16362,7 +16362,41 @@ function getJira() {
     });
 }
 
+;// CONCATENATED MODULE: ./getData/slack.ts
+var slack_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+const slack_axios = __nccwpck_require__(4158);
+function getSlack() {
+    return slack_awaiter(this, void 0, void 0, function* () {
+        let textToWrite = "";
+        yield slack_axios
+            .post("http://app.watermelontools.com/api/slack/searchMessagesByText", {
+            user: "estebandalelr@gmail.com",
+            text: "action github",
+        })
+            .then((response) => {
+            textToWrite += "**Slack Treads**";
+            for (let index = 0; index < response.data.messages.matches.length; index++) {
+                const element = response.data.messages.matches[index];
+                textToWrite += `\n[#${element.username} - ${element.text}](${element.permalink})`;
+            }
+        })
+            .catch((error) => {
+            console.log(error.message);
+        });
+        return textToWrite;
+    });
+}
+
 ;// CONCATENATED MODULE: ./index.ts
+
 
 
 const core = __nccwpck_require__(2556);
@@ -16372,7 +16406,7 @@ try {
     const payload = JSON.stringify(github.context.payload, undefined, 2);
     let textToWrite = "";
     console.log(`The event payload: ${payload}`);
-    let getDataPromises = [getJira(), getGithub()];
+    let getDataPromises = [getJira(), getGithub(), getSlack()];
     Promise.all(getDataPromises)
         .then((values) => {
         values.forEach((value) => {
