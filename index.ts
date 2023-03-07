@@ -1,3 +1,4 @@
+import getGithub from "./getData/github";
 import getJira from "./getData/jira";
 
 const core = require("@actions/core");
@@ -7,7 +8,7 @@ try {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   let textToWrite = "";
   console.log(`The event payload: ${payload}`);
-  let getDataPromises = [getJira()];
+  let getDataPromises = [getJira(), getGithub()];
   Promise.all(getDataPromises)
     .then((values) => {
       values.forEach((value) => {
