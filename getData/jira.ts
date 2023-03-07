@@ -11,12 +11,10 @@ export default async function getJira() {
       for (let index = 0; index < response.data.length; index++) {
         const element = response.data[index];
         textToWrite += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
-        textToWrite += `--------------\n`;
+        textToWrite += `\n--------------\n`;
         // shortcircuit to three results
         if (index === 2) {
-          textToWrite += `and ${
-            response.data.messages.matches.length - 3
-          } more`;
+          textToWrite += `and ${response.data.length - 3} more`;
           break;
         }
       }
