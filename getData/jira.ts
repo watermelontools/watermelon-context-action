@@ -7,11 +7,11 @@ export default async function getJira() {
       prTitle: "WM-49: Create payments success page",
     })
     .then((response) => {
-      textToWrite += "**Jira Tickets**";
+      textToWrite += "### Jira Tickets";
       for (let index = 0; index < response.data.length; index++) {
         const element = response.data[index];
-        textToWrite += `\n[${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
-        textToWrite += `\n--------------\n`;
+        textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+        textToWrite += `\n`;
         // shortcircuit to three results
         if (index === 2) {
           textToWrite += `and ${response.data.length - 3} more`;

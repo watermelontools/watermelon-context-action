@@ -9,11 +9,11 @@ export default async function getGithub() {
       commitList: "264ef7c1455b51f1cb65d4457aeaa700478c91f4",
     })
     .then((response) => {
-      textToWrite += "**GitHub PRs**";
+      textToWrite += "### GitHub PRs";
       for (let index = 0; index < response.data.items.length; index++) {
         const element = response.data.items[index];
-        textToWrite += `\n[#${element.number} - ${element.title}](${element.html_url})`;
-        textToWrite += `\n--------------\n`;
+        textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
+        textToWrite += `\n`;
         // shortcircuit to three results
         if (index === 2) {
           textToWrite += `and ${response.data.items.length - 3} more`;
