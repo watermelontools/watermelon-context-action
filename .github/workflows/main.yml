@@ -19,6 +19,7 @@ jobs:
     name: Write a comment
     steps:
       - name: Find Comment
+        continue-on-error: true
         uses: peter-evans/find-comment@v2
         id: fc
         with:
