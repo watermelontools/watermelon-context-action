@@ -18,9 +18,6 @@ jobs:
     needs: getdata
     name: Write a comment
     steps:
-      - env:
-          OUTPUT1: ${{needs.getdata.outputs.result}}
-        run: echo "$OUTPUT1"
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
         with:
