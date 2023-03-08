@@ -6,11 +6,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 try {
   // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(
-    github.context.payload.pull_request,
-    undefined,
-    2
-  );
+  const payload = JSON.stringify(github.context.pull_request, undefined, 2);
   let textToWrite = "## Context by Watermelon\n";
   console.log(`The event pull_request: ${payload}`);
   core.setOutput("issuenumber", github.context.payload.pull_request.number);
