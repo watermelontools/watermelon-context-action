@@ -6,7 +6,7 @@ jobs:
     name: Get code context
     # Map a step output to a job output
     outputs:
-      result: ${{ steps.watermelon.outputs.ghdata }}
+      result: ${{ steps.watermelon.outputs.textToWrite }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -22,4 +22,4 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: 1
-          body: ${{ steps.watermelon.outputs.result }}
+          body: ${{ needs.getdata.outputs.result }}
