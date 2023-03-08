@@ -6,9 +6,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 try {
   // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
   let textToWrite = "## Context by Watermelon\n";
-  console.log(`The event payload: ${payload}`);
   let getDataPromises = [getGithub(), getJira(), getSlack()];
   Promise.all(getDataPromises)
     .then((values) => {
