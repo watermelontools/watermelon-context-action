@@ -27,6 +27,7 @@ jobs:
           comment-author: "github-actions[bot]"
           body-includes: Context by Watermelon
       - run: |
+          echo ${{ github.event.pull_request.number }}
           echo ${{ steps.fc.outputs.comment-id }}
           echo ${{ steps.fc.outputs.comment-body }}
           echo ${{ steps.fc.outputs.comment-author }}
