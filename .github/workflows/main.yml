@@ -25,8 +25,13 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: "github-actions[bot]"
           body-includes: Context by Watermelon
-
+      - run: |
+          echo ${{ steps.fc.outputs.comment-id }}
+          echo ${{ steps.fc.outputs.comment-body }}
+          echo ${{ steps.fc.outputs.comment-author }}
+          echo ${{ steps.fc.outputs.comment-created-at }}
       - name: Create comment
+        id: cc
         uses: peter-evans/create-or-update-comment@v2
         if: steps.fc.outputs.comment-id == ''
         with:
@@ -35,6 +40,7 @@ jobs:
           reactions: watermelon
 
       - name: Update comment
+        id: uc
         if: steps.fc.outputs.comment-id != ''
         uses: peter-evans/create-or-update-comment@v2
         with:
