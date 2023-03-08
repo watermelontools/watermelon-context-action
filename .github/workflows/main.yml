@@ -1,4 +1,6 @@
-on: [push]
+on:
+  pull_request_target:
+    types: [opened, edited]
 
 jobs:
   getdata:
@@ -27,22 +29,15 @@ jobs:
         uses: peter-evans/find-comment@v2
         id: fc
         with:
-          issue-number: ${{ needs.getdata.outputs.issuenumber }}
+          issue-number: ${{ github.event.pull_request.number }}
           comment-author: "github-actions[bot]"
           body-includes: Context by Watermelon
-      - run: |
-          echo ${{ github.event.payload.pull_request.number }}
-          echo ${{ needs.getdata.outputs.issuenumber }}
-          echo ${{ steps.fc.outputs.comment-id }}
-          echo ${{ steps.fc.outputs.comment-body }}
-          echo ${{ steps.fc.outputs.comment-author }}
-          echo ${{ steps.fc.outputs.comment-created-at }}
       - name: Create comment
         id: cc
         uses: peter-evans/create-or-update-comment@v2
         if: steps.fc.outputs.comment-id == ''
         with:
-          issue-number: ${{ needs.getdata.outputs.issuenumber }}
+          issue-number: ${{ github.event.pull_request.number }}
           body: ${{ needs.getdata.outputs.result }}
           reactions: watermelon
 
@@ -51,6 +46,7 @@ jobs:
         if: steps.fc.outputs.comment-id != ''
         uses: peter-evans/create-or-update-comment@v2
         with:
+          issue-number: ${{ github.event.pull_request.number }}
           comment-id: ${{ steps.fc.outputs.comment-id }}
           body: ${{ needs.getdata.outputs.result }}
           reactions: hooray
