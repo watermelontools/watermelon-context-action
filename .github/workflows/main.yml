@@ -7,6 +7,7 @@ jobs:
     # Map a step output to a job output
     outputs:
       result: ${{ steps.watermelon.outputs.textToWrite }}
+      issuenumber: ${{ steps.watermelon.outputs.issuenumber }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -23,12 +24,12 @@ jobs:
         uses: peter-evans/find-comment@v2
         id: fc
         with:
-          issue-number: ${{ github.payload.pull_request.number }}
+          issue-number: ${{ needs.getdata.outputs.issuenumber }}
           comment-author: "github-actions[bot]"
           body-includes: Context by Watermelon
       - run: |
           echo ${{ github.event.payload.pull_request.number }}
-          echo ${{ github.payload.pull_request.number }}
+          echo ${{ needs.getdata.outputs.issuenumber }}
           echo ${{ steps.fc.outputs.comment-id }}
           echo ${{ steps.fc.outputs.comment-body }}
           echo ${{ steps.fc.outputs.comment-author }}
@@ -38,7 +39,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2
         if: steps.fc.outputs.comment-id == ''
         with:
-          issue-number: ${{ github.payload.pull_request.number }}
+          issue-number: ${{ needs.getdata.outputs.issuenumber }}
           body: ${{ needs.getdata.outputs.result }}
           reactions: watermelon
 
