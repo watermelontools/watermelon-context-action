@@ -7,13 +7,9 @@ jobs:
     # Map a step output to a job output
     outputs:
       result: ${{ steps.watermelon.outputs.textToWrite }}
-      issuenumber: ${{ steps.watermelon.outputs.issuenumber }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - run: |
-          echo ${{ github.event.payload.pull_request }}
-          echo ${{ github.event.pull_request }}
       - name: Watermelon context
         id: watermelon
         uses: ./
@@ -37,7 +33,6 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: ${{ needs.getdata.outputs.result }}
-          reactions: watermelon
 
       - name: Update comment
         id: uc
@@ -47,5 +42,4 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-id: ${{ steps.fc.outputs.comment-id }}
           body: ${{ needs.getdata.outputs.result }}
-          reactions: hooray
           edit-mode: replace
