@@ -16271,29 +16271,176 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
+// ESM COMPAT FLAG
+__nccwpck_require__.r(__webpack_exports__);
+
+;// CONCATENATED MODULE: ./getData/github.ts
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+const axios = __nccwpck_require__(4158);
+function getGithub() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let textToWrite = "";
+        yield axios
+            .post("http://app.watermelontools.com/api/github/getIssuesByCommits", {
+            user: "estebandalelr@gmail.com",
+            repo: "watermelon",
+            owner: "watermelontools",
+            commitList: "264ef7c1455b51f1cb65d4457aeaa700478c91f4",
+        })
+            .then((response) => {
+            textToWrite += "### GitHub PRs";
+            for (let index = 0; index < response.data.items.length; index++) {
+                const element = response.data.items[index];
+                textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
+                textToWrite += `\n`;
+                // shortcircuit to three results
+                if (index === 2) {
+                    textToWrite += `and ${response.data.items.length - 3} more`;
+                    break;
+                }
+            }
+        })
+            .catch((error) => {
+            console.log(error.message);
+        });
+        return textToWrite;
+    });
+}
+
+;// CONCATENATED MODULE: ./getData/jira.ts
+var jira_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+const jira_axios = __nccwpck_require__(4158);
+function getJira() {
+    return jira_awaiter(this, void 0, void 0, function* () {
+        let textToWrite = "";
+        yield jira_axios
+            .post("http://app.watermelontools.com/api/jira/getMostRelevantJiraTicket", {
+            user: "estebandalelr@gmail.com",
+            prTitle: "WM-49: Create payments success page",
+        })
+            .then((response) => {
+            textToWrite += "### Jira Tickets";
+            for (let index = 0; index < response.data.length; index++) {
+                const element = response.data[index];
+                textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+                textToWrite += `\n`;
+                // shortcircuit to three results
+                if (index === 2) {
+                    textToWrite += `and ${response.data.length - 3} more`;
+                    break;
+                }
+            }
+        })
+            .catch((error) => {
+            console.log(error.message);
+        });
+        return textToWrite;
+    });
+}
+
+;// CONCATENATED MODULE: ./getData/slack.ts
+var slack_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+const slack_axios = __nccwpck_require__(4158);
+function getSlack() {
+    return slack_awaiter(this, void 0, void 0, function* () {
+        let textToWrite = "";
+        yield slack_axios
+            .post("http://app.watermelontools.com/api/slack/searchMessagesByText", {
+            user: "estebandalelr@gmail.com",
+            text: "action github",
+        })
+            .then((response) => {
+            textToWrite += "### Slack Threads";
+            for (let index = 0; index < response.data.messages.matches.length; index++) {
+                const element = response.data.messages.matches[index];
+                textToWrite += `\n - [#${element.channel.name} - ${element.username}\n ${element.text.length > 100
+                    ? element.text.substring(0, 100) + "..."
+                    : element.text}](${element.permalink})`;
+                textToWrite += `\n`;
+                // shortcircuit to three results
+                if (index === 2) {
+                    textToWrite += `and ${response.data.messages.matches.length - 3} more`;
+                    break;
+                }
+            }
+        })
+            .catch((error) => {
+            console.log(error.message);
+        });
+        return textToWrite;
+    });
+}
+
+;// CONCATENATED MODULE: ./index.ts
+
+
+
 const core = __nccwpck_require__(2556);
 const github = __nccwpck_require__(8348);
-const axios = __nccwpck_require__(4158);
 try {
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-  axios
-    .post("http://app.watermelontools.com/api/jira/getMostRelevantJiraTicket", {
-      user: "estebandalelr@gmail.com",
-      prTitle: "WM-49: Create payments success page",
+    // Get the JSON webhook payload for the event that triggered the workflow
+    let textToWrite = "## Context by Watermelon\n";
+    let getDataPromises = [getGithub(), getJira(), getSlack()];
+    Promise.all(getDataPromises)
+        .then((values) => {
+        values.forEach((value) => {
+            textToWrite += value;
+            textToWrite += "\n";
+        });
     })
-    .then((response) => core.setOutput("ghdata", response.data));
-} catch (error) {
-  core.setFailed(error.message);
+        .catch((error) => {
+        console.log(error.message);
+    })
+        .finally(() => {
+        core.setOutput("textToWrite", textToWrite);
+    });
+}
+catch (error) {
+    core.setFailed(error.message);
 }
 
 })();

@@ -1,4 +1,4 @@
-on: [push]
+on: [pull_request]
 
 jobs:
   getdata:
@@ -6,7 +6,7 @@ jobs:
     name: Get code context
     # Map a step output to a job output
     outputs:
-      result: ${{ steps.watermelon.outputs.ghdata }}
+      result: ${{ steps.watermelon.outputs.textToWrite }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -18,11 +18,28 @@ jobs:
     needs: getdata
     name: Write a comment
     steps:
-      - env:
-          OUTPUT1: ${{needs.getdata.outputs.result}}
-        run: echo "$OUTPUT1"
+      - name: Find Comment
+        continue-on-error: true
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: Context by Watermelon
       - name: Create comment
+        id: cc
+        uses: peter-evans/create-or-update-comment@v2
+        if: steps.fc.outputs.comment-id == ''
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: ${{ needs.getdata.outputs.result }}
+
+      - name: Update comment
+        id: uc
+        if: steps.fc.outputs.comment-id != ''
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number: 1
-          body: ${{ steps.watermelon.outputs.result }}
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          body: ${{ needs.getdata.outputs.result }}
+          edit-mode: replace
