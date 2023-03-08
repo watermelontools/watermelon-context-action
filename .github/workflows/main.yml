@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - run: |
+          echo ${{ github.event.payload.pull_request }}
+          echo ${{ github.event.pull_request }}
       - name: Watermelon context
         id: watermelon
         uses: ./
