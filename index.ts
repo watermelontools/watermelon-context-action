@@ -11,9 +11,7 @@ try {
   let getDataPromises = [getContext()];
   Promise.all(getDataPromises)
     .then((values) => {
-      console.log(values);
       values.forEach((value) => {
-        console.log(value);
         textToWrite += value;
         textToWrite += "\n";
       });
