@@ -16310,6 +16310,7 @@ const axios = __nccwpck_require__(4158);
 function getContext() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
+        console.log(github.event);
         yield axios
             .post("http://app.watermelontools.com/api/actions/getContext", {
             user: github.event.payload.pull_request.user.login,
