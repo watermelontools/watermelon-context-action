@@ -16310,12 +16310,11 @@ const axios = __nccwpck_require__(4158);
 function getContext() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
-        console.log(github);
         yield axios
             .post("http://app.watermelontools.com/api/actions/getContext", {
-            user: github.event.payload.pull_request.user.login,
-            repo: github.event.payload.repository.name,
-            owner: github.event.payload.repository.owner.login,
+            user: github.payload.pull_request.user.login,
+            repo: github.payload.repository.name,
+            owner: github.payload.repository.owner.login,
             commitList: "264ef7c1455b51f1cb65d4457aeaa700478c91f4",
         })
             .then((response) => {
@@ -16325,7 +16324,7 @@ function getContext() {
             console.log(error.message);
         });
         yield axios
-            .get(github.event.payload.pull_request.commits.href)
+            .get(github.payload.pull_request.commits.href)
             .then((response) => {
             console.log(response);
         })
