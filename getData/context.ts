@@ -6,9 +6,9 @@ export default async function getContext() {
   let textToWrite = "";
   await axios
     .post("http://app.watermelontools.com/api/actions/getContext", {
-      user: github.payload.pull_request.user.login,
-      repo: github.payload.repository.name,
-      owner: github.payload.repository.owner.login,
+      user: github.context.payload.pull_request.user.login,
+      repo: github.context.payload.repository.name,
+      owner: github.context.payload.repository.owner.login,
       commitList: "264ef7c1455b51f1cb65d4457aeaa700478c91f4",
     })
     .then((response) => {
@@ -18,7 +18,7 @@ export default async function getContext() {
       console.log(error.message);
     });
   await axios
-    .get(github.payload.pull_request.commits.href)
+    .get(github.context.payload.pull_request.commits.href)
     .then((response) => {
       console.log(response);
     })
