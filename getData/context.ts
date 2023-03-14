@@ -4,7 +4,7 @@ const github = require("@actions/github");
 const axios = require("axios");
 export default async function getContext() {
   let textToWrite = "";
-  console.log(github.event);
+  console.log(github);
   await axios
     .post("http://app.watermelontools.com/api/actions/getContext", {
       user: github.event.payload.pull_request.user.login,
