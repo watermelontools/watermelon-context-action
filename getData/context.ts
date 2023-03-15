@@ -10,7 +10,8 @@ export default async function getContext() {
     .get(github.context.payload.pull_request._links.commits.href)
     .then((response) => {
       for (let index = 0; index < response.data.length; index++) {
-        commitList.push(response.data[index].sha);
+        commitList.push(response.data[index].sha.slice(0, 5));
+        if (index > 20) break;
       }
     })
     .catch((error) => {
