@@ -28,34 +28,34 @@ export default async function getContext() {
     })
     .then((response) => {
       textToWrite += "### GitHub PRs";
-      for (let index = 0; index < response.data.items.length; index++) {
-        const element = response.data.items[index];
+      for (let index = 0; index < response.data.ghValue.items.length; index++) {
+        const element = response.data.ghValue.items[index];
         textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
         textToWrite += `\n`;
         // shortcircuit to three results
         if (index === 2) {
-          textToWrite += `and ${response.data.items.length - 3} more`;
+          textToWrite += `and ${response.data.ghValue.items.length - 3} more`;
           break;
         }
       }
       textToWrite += "### Jira Tickets";
-      for (let index = 0; index < response.data.length; index++) {
-        const element = response.data[index];
+      for (let index = 0; index < response.data.jiraValue.length; index++) {
+        const element = response.data.jiraValue[index];
         textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
         textToWrite += `\n`;
         // shortcircuit to three results
         if (index === 2) {
-          textToWrite += `and ${response.data.length - 3} more`;
+          textToWrite += `and ${response.data.jiraValue.length - 3} more`;
           break;
         }
       }
       textToWrite += "### Slack Threads";
       for (
         let index = 0;
-        index < response.data.messages.matches.length;
+        index < response.data.slackValue.messages.matches.length;
         index++
       ) {
-        const element = response.data.messages.matches[index];
+        const element = response.data.slackValue.messages.matches[index];
         textToWrite += `\n - [#${element.channel.name} - ${
           element.username
         }\n ${
@@ -67,7 +67,7 @@ export default async function getContext() {
         // shortcircuit to three results
         if (index === 2) {
           textToWrite += `and ${
-            response.data.messages.matches.length - 3
+            response.data.slackValue.messages.matches.length - 3
           } more`;
           break;
         }
