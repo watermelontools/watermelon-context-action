@@ -16310,10 +16310,9 @@ const axios = __nccwpck_require__(4158);
 function getContext() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
-        console.log("url ", github.context);
-        console.log("url ", github.context.payload.pull_request.commits.href);
+        console.log("url ", github.context.payload.pull_request._links.commits.href);
         yield axios
-            .get(github.context.payload.pull_request.commits.href)
+            .get(github.context.payload.pull_request._links.commits.href)
             .then((response) => {
             console.log("commits", response.data);
         })
