@@ -16310,12 +16310,12 @@ const axios = __nccwpck_require__(4158);
 function getContext() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
-        console.log("url ", github.context.payload.pull_request._links.commits.href);
         let commitList = [];
         yield axios
             .get(github.context.payload.pull_request._links.commits.href)
             .then((response) => {
-            for (let index = 0; index < response.data.length; index++) {
+            var _a;
+            for (let index = 0; index < ((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.length); index++) {
                 commitList.push(response.data[index].commit.message);
             }
         })
@@ -16332,14 +16332,15 @@ function getContext() {
             body: github.context.payload.pull_request.body,
         })
             .then((response) => {
+            var _a, _b;
             textToWrite += "### GitHub PRs";
-            for (let index = 0; index < response.data.ghValue.items.length; index++) {
-                const element = response.data.ghValue.items[index];
+            for (let index = 0; index < ((_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.ghValue) === null || _b === void 0 ? void 0 : _b.length); index++) {
+                const element = response.data.ghValue[index];
                 textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
                 textToWrite += `\n`;
                 // shortcircuit to three results
                 if (index === 2) {
-                    textToWrite += `and ${response.data.ghValue.items.length - 3} more`;
+                    textToWrite += `and ${response.data.ghValue.length - 3} more`;
                     break;
                 }
             }
