@@ -16,6 +16,7 @@ export default async function getContext() {
     .catch((error) => {
       console.log(error.message);
     });
+  console.log("clist length", commitList.length);
   await axios
     .post("http://app.watermelontools.com/api/actions/getContext", {
       user: github.context.payload.pull_request.user.login,
@@ -40,5 +41,5 @@ export default async function getContext() {
       console.log(error.message);
     });
 
-  return true;
+  return textToWrite;
 }
