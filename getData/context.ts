@@ -21,6 +21,8 @@ export default async function getContext() {
     repo: github.context.payload.repository.name,
     owner: github.context.payload.repository.owner.login,
     commitList,
+    title: github.context.payload.pull_request.title,
+    body: github.context.payload.pull_request.body,
   });
   console.log(commitList);
 
