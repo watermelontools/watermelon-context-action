@@ -16327,7 +16327,7 @@ function getContext() {
             user: github.context.payload.pull_request.user.login,
             repo: github.context.payload.repository.name,
             owner: github.context.payload.repository.owner.login,
-            commitList,
+            commitList: encodeURIComponent(commitList.toString()),
         })
             .then((response) => {
             textToWrite += "### GitHub PRs";
