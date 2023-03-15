@@ -39,37 +39,45 @@ export default async function getContext() {
         }
       }
       textToWrite += "### Jira Tickets";
-      for (let index = 0; index < response.data.jiraValue.length; index++) {
-        const element = response.data.jiraValue[index];
-        textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
-        textToWrite += `\n`;
-        // shortcircuit to three results
-        if (index === 2) {
-          textToWrite += `and ${response.data.jiraValue.length - 3} more`;
-          break;
+      if (response.data.jiraValue.error === "no jira token") {
+        textToWrite += `\n [Click here to login to Jira](https://app.watermelontools.com)`;
+      } else {
+        for (let index = 0; index < response.data.jiraValue.length; index++) {
+          const element = response.data.jiraValue[index];
+          textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+          textToWrite += `\n`;
+          // shortcircuit to three results
+          if (index === 2) {
+            textToWrite += `and ${response.data.jiraValue.length - 3} more`;
+            break;
+          }
         }
       }
       textToWrite += "### Slack Threads";
-      for (
-        let index = 0;
-        index < response.data.slackValue.messages.matches.length;
-        index++
-      ) {
-        const element = response.data.slackValue.messages.matches[index];
-        textToWrite += `\n - [#${element.channel.name} - ${
-          element.username
-        }\n ${
-          element.text.length > 100
-            ? element.text.substring(0, 100) + "..."
-            : element.text
-        }](${element.permalink})`;
-        textToWrite += `\n`;
-        // shortcircuit to three results
-        if (index === 2) {
-          textToWrite += `and ${
-            response.data.slackValue.messages.matches.length - 3
-          } more`;
-          break;
+      if (response.data.slackValue.error === "no slack token") {
+        textToWrite += `\n [Click here to login to Slack](https://app.watermelontools.com)`;
+      } else {
+        for (
+          let index = 0;
+          index < response.data.slackValue.messages.matches.length;
+          index++
+        ) {
+          const element = response.data.slackValue.messages.matches[index];
+          textToWrite += `\n - [#${element.channel.name} - ${
+            element.username
+          }\n ${
+            element.text.length > 100
+              ? element.text.substring(0, 100) + "..."
+              : element.text
+          }](${element.permalink})`;
+          textToWrite += `\n`;
+          // shortcircuit to three results
+          if (index === 2) {
+            textToWrite += `and ${
+              response.data.slackValue.messages.matches.length - 3
+            } more`;
+            break;
+          }
         }
       }
     })
