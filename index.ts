@@ -1,7 +1,4 @@
 import getContext from "./getData/context";
-import getGithub from "./getData/github";
-import getJira from "./getData/jira";
-import getSlack from "./getData/slack";
 
 const core = require("@actions/core");
 const github = require("@actions/github");
