@@ -10,8 +10,7 @@ export default async function getContext() {
     .get(github.context.payload.pull_request._links.commits.href)
     .then((response) => {
       for (let index = 0; index < response.data.length; index++) {
-        commitList.push(response.data[index].sha.slice(0, 5));
-        if (index > 20) break;
+        commitList.push(response.data[index].commit.message);
       }
     })
     .catch((error) => {
@@ -21,7 +20,7 @@ export default async function getContext() {
     user: github.context.payload.pull_request.user.login,
     repo: github.context.payload.repository.name,
     owner: github.context.payload.repository.owner.login,
-    commitList: encodeURIComponent(commitList.toString()),
+    commitList,
   });
   console.log(commitList);
 
@@ -30,7 +29,7 @@ export default async function getContext() {
       user: github.context.payload.pull_request.user.login,
       repo: github.context.payload.repository.name,
       owner: github.context.payload.repository.owner.login,
-      commitList: encodeURIComponent(commitList.toString()),
+      commitList: commitList.toString(),
     })
     .then((response) => {
       textToWrite += "### GitHub PRs";
