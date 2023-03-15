@@ -4,7 +4,7 @@ const github = require("@actions/github");
 const axios = require("axios");
 export default async function getContext() {
   let textToWrite = "";
-  console.log(github.context.payload.pull_request.commits.href);
+  console.log("url ", github.context.payload.pull_request.commits.href);
   await axios
     .get(github.context.payload.pull_request.commits.href)
     .then((response) => {
