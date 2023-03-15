@@ -14,17 +14,8 @@ export default async function getContext() {
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      console.error(error.message);
     });
-  console.log({
-    user: github.context.payload.pull_request.user.login,
-    repo: github.context.payload.repository.name,
-    owner: github.context.payload.repository.owner.login,
-    commitList,
-    title: github.context.payload.pull_request.title,
-    body: github.context.payload.pull_request.body,
-  });
-  console.log(commitList);
 
   await axios
     .post("http://app.watermelontools.com/api/actions/getContext", {
@@ -47,9 +38,43 @@ export default async function getContext() {
           break;
         }
       }
+      textToWrite += "### Jira Tickets";
+      for (let index = 0; index < response.data.length; index++) {
+        const element = response.data[index];
+        textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+        textToWrite += `\n`;
+        // shortcircuit to three results
+        if (index === 2) {
+          textToWrite += `and ${response.data.length - 3} more`;
+          break;
+        }
+      }
+      textToWrite += "### Slack Threads";
+      for (
+        let index = 0;
+        index < response.data.messages.matches.length;
+        index++
+      ) {
+        const element = response.data.messages.matches[index];
+        textToWrite += `\n - [#${element.channel.name} - ${
+          element.username
+        }\n ${
+          element.text.length > 100
+            ? element.text.substring(0, 100) + "..."
+            : element.text
+        }](${element.permalink})`;
+        textToWrite += `\n`;
+        // shortcircuit to three results
+        if (index === 2) {
+          textToWrite += `and ${
+            response.data.messages.matches.length - 3
+          } more`;
+          break;
+        }
+      }
     })
     .catch((error) => {
-      console.log(error.message);
+      console.error(error.message);
     });
 
   return textToWrite;
