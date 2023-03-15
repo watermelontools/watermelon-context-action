@@ -16320,17 +16320,8 @@ function getContext() {
             }
         })
             .catch((error) => {
-            console.log(error.message);
+            console.error(error.message);
         });
-        console.log({
-            user: github.context.payload.pull_request.user.login,
-            repo: github.context.payload.repository.name,
-            owner: github.context.payload.repository.owner.login,
-            commitList,
-            title: github.context.payload.pull_request.title,
-            body: github.context.payload.pull_request.body,
-        });
-        console.log(commitList);
         yield axios
             .post("http://app.watermelontools.com/api/actions/getContext", {
             user: github.context.payload.pull_request.user.login,
@@ -16342,19 +16333,53 @@ function getContext() {
         })
             .then((response) => {
             textToWrite += "### GitHub PRs";
-            for (let index = 0; index < response.data.items.length; index++) {
-                const element = response.data.items[index];
+            for (let index = 0; index < response.data.ghValue.items.length; index++) {
+                const element = response.data.ghValue.items[index];
                 textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
                 textToWrite += `\n`;
                 // shortcircuit to three results
                 if (index === 2) {
-                    textToWrite += `and ${response.data.items.length - 3} more`;
+                    textToWrite += `and ${response.data.ghValue.items.length - 3} more`;
                     break;
+                }
+            }
+            textToWrite += "### Jira Tickets";
+            if (response.data.jiraValue.error === "no jira token") {
+                textToWrite += `\n [Click here to login to Jira](https://app.watermelontools.com)`;
+            }
+            else {
+                for (let index = 0; index < response.data.jiraValue.length; index++) {
+                    const element = response.data.jiraValue[index];
+                    textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+                    textToWrite += `\n`;
+                    // shortcircuit to three results
+                    if (index === 2) {
+                        textToWrite += `and ${response.data.jiraValue.length - 3} more`;
+                        break;
+                    }
+                }
+            }
+            textToWrite += "### Slack Threads";
+            if (response.data.slackValue.error === "no slack token") {
+                textToWrite += `\n [Click here to login to Slack](https://app.watermelontools.com)`;
+            }
+            else {
+                for (let index = 0; index < response.data.slackValue.messages.matches.length; index++) {
+                    const element = response.data.slackValue.messages.matches[index];
+                    textToWrite += `\n - [#${element.channel.name} - ${element.username}\n ${element.text.length > 100
+                        ? element.text.substring(0, 100) + "..."
+                        : element.text}](${element.permalink})`;
+                    textToWrite += `\n`;
+                    // shortcircuit to three results
+                    if (index === 2) {
+                        textToWrite += `and ${response.data.slackValue.messages.matches.length - 3} more`;
+                        break;
+                    }
                 }
             }
         })
             .catch((error) => {
-            console.log(error.message);
+            console.error(error.message);
         });
         return textToWrite;
     });
