@@ -16311,6 +16311,14 @@ function getContext() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
         yield axios
+            .get(github.context.payload.pull_request.commits.href)
+            .then((response) => {
+            console.log("commits", response.data);
+        })
+            .catch((error) => {
+            console.log(error.message);
+        });
+        yield axios
             .post("http://app.watermelontools.com/api/actions/getContext", {
             user: github.context.payload.pull_request.user.login,
             repo: github.context.payload.repository.name,
@@ -16330,14 +16338,6 @@ function getContext() {
                     break;
                 }
             }
-        })
-            .catch((error) => {
-            console.log(error.message);
-        });
-        yield axios
-            .get(github.context.payload.pull_request.commits.href)
-            .then((response) => {
-            console.log("commits", response.data);
         })
             .catch((error) => {
             console.log(error.message);
