@@ -12,7 +12,7 @@ export default async function getContext() {
     .catch((error) => {
       console.log(error.message);
     });
-  await axios
+  /* await axios
     .post("http://app.watermelontools.com/api/actions/getContext", {
       user: github.context.payload.pull_request.user.login,
       repo: github.context.payload.repository.name,
@@ -35,7 +35,7 @@ export default async function getContext() {
     })
     .catch((error) => {
       console.log(error.message);
-    });
+    }); */
 
   return true;
 }
