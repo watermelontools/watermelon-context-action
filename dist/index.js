@@ -16322,6 +16322,7 @@ function getContext() {
             .catch((error) => {
             console.log(error.message);
         });
+        console.log("clist length", commitList.length);
         yield axios
             .post("http://app.watermelontools.com/api/actions/getContext", {
             user: github.context.payload.pull_request.user.login,
@@ -16345,7 +16346,7 @@ function getContext() {
             .catch((error) => {
             console.log(error.message);
         });
-        return true;
+        return textToWrite;
     });
 }
 
