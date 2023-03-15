@@ -27,16 +27,23 @@ export default async function getContext() {
     })
     .then((response) => {
       textToWrite += "### GitHub PRs";
-      for (let index = 0; index < response.data?.ghValue?.length; index++) {
-        const element = response.data.ghValue[index];
-        textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
-        textToWrite += `\n`;
-        // shortcircuit to three results
-        if (index === 2) {
-          textToWrite += `and ${response.data.ghValue.length - 3} more`;
-          break;
+      if (response?.data?.ghValue?.length) {
+        for (let index = 0; index < response.data?.ghValue?.length; index++) {
+          const element = response.data.ghValue[index];
+          textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
+          textToWrite += `\n`;
+          // shortcircuit to three results
+          if (index === 2) {
+            textToWrite += `and ${response.data.ghValue.length - 3} more`;
+            break;
+          }
         }
+      } else {
+        textToWrite += `\n No results found :(`;
       }
+
+      textToWrite += `\n`;
+
       textToWrite += "### Jira Tickets";
       if (response.data.jiraValue.error === "no jira token") {
         textToWrite += `\n [Click here to login to Jira](https://app.watermelontools.com)`;
@@ -56,6 +63,8 @@ export default async function getContext() {
           textToWrite += `\n No results found :(`;
         }
       }
+      textToWrite += `\n`;
+
       textToWrite += "### Slack Threads";
       if (response.data.slackValue.error === "no slack token") {
         textToWrite += `\n [Click here to login to Slack](https://app.watermelontools.com)`;
