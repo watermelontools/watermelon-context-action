@@ -4,12 +4,11 @@ const github = require("@actions/github");
 const axios = require("axios");
 export default async function getContext() {
   let textToWrite = "";
-  console.log("url ", github.context.payload.pull_request._links.commits.href);
   let commitList = [];
   await axios
     .get(github.context.payload.pull_request._links.commits.href)
     .then((response) => {
-      for (let index = 0; index < response.data.length; index++) {
+      for (let index = 0; index < response?.data?.length; index++) {
         commitList.push(response.data[index].commit.message);
       }
     })
@@ -28,13 +27,13 @@ export default async function getContext() {
     })
     .then((response) => {
       textToWrite += "### GitHub PRs";
-      for (let index = 0; index < response.data.ghValue.items.length; index++) {
-        const element = response.data.ghValue.items[index];
+      for (let index = 0; index < response.data?.ghValue?.length; index++) {
+        const element = response.data.ghValue[index];
         textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
         textToWrite += `\n`;
         // shortcircuit to three results
         if (index === 2) {
-          textToWrite += `and ${response.data.ghValue.items.length - 3} more`;
+          textToWrite += `and ${response.data.ghValue.length - 3} more`;
           break;
         }
       }
