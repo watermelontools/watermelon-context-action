@@ -16332,24 +16332,30 @@ function getContext() {
             body: github.context.payload.pull_request.body,
         })
             .then((response) => {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
             textToWrite += "### GitHub PRs";
-            for (let index = 0; index < ((_b = (_a = response.data) === null || _a === void 0 ? void 0 : _a.ghValue) === null || _b === void 0 ? void 0 : _b.length); index++) {
-                const element = response.data.ghValue[index];
-                textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
-                textToWrite += `\n`;
-                // shortcircuit to three results
-                if (index === 2) {
-                    textToWrite += `and ${response.data.ghValue.length - 3} more`;
-                    break;
+            if ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.ghValue) === null || _b === void 0 ? void 0 : _b.length) {
+                for (let index = 0; index < ((_d = (_c = response.data) === null || _c === void 0 ? void 0 : _c.ghValue) === null || _d === void 0 ? void 0 : _d.length); index++) {
+                    const element = response.data.ghValue[index];
+                    textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
+                    textToWrite += `\n`;
+                    // shortcircuit to three results
+                    if (index === 2) {
+                        textToWrite += `and ${response.data.ghValue.length - 3} more`;
+                        break;
+                    }
                 }
             }
+            else {
+                textToWrite += `\n No results found :(`;
+            }
+            textToWrite += `\n`;
             textToWrite += "### Jira Tickets";
             if (response.data.jiraValue.error === "no jira token") {
                 textToWrite += `\n [Click here to login to Jira](https://app.watermelontools.com)`;
             }
             else {
-                if ((_d = (_c = response === null || response === void 0 ? void 0 : response.data) === null || _c === void 0 ? void 0 : _c.jiraValue) === null || _d === void 0 ? void 0 : _d.length) {
+                if ((_f = (_e = response === null || response === void 0 ? void 0 : response.data) === null || _e === void 0 ? void 0 : _e.jiraValue) === null || _f === void 0 ? void 0 : _f.length) {
                     for (let index = 0; index < response.data.jiraValue.length; index++) {
                         const element = response.data.jiraValue[index];
                         textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
@@ -16365,12 +16371,13 @@ function getContext() {
                     textToWrite += `\n No results found :(`;
                 }
             }
+            textToWrite += `\n`;
             textToWrite += "### Slack Threads";
             if (response.data.slackValue.error === "no slack token") {
                 textToWrite += `\n [Click here to login to Slack](https://app.watermelontools.com)`;
             }
             else {
-                if ((_h = (_g = (_f = (_e = response === null || response === void 0 ? void 0 : response.data) === null || _e === void 0 ? void 0 : _e.slackValue) === null || _f === void 0 ? void 0 : _f.messages) === null || _g === void 0 ? void 0 : _g.matches) === null || _h === void 0 ? void 0 : _h.length) {
+                if ((_k = (_j = (_h = (_g = response === null || response === void 0 ? void 0 : response.data) === null || _g === void 0 ? void 0 : _g.slackValue) === null || _h === void 0 ? void 0 : _h.messages) === null || _j === void 0 ? void 0 : _j.matches) === null || _k === void 0 ? void 0 : _k.length) {
                     for (let index = 0; index < response.data.slackValue.messages.matches.length; index++) {
                         const element = response.data.slackValue.messages.matches[index];
                         textToWrite += `\n - [#${element.channel.name} - ${element.username}\n ${element.text.length > 100
