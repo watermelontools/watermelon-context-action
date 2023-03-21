@@ -8,8 +8,6 @@ jobs:
     outputs:
       result: ${{ steps.watermelon.outputs.textToWrite }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Watermelon context
         id: watermelon
         uses: ./
