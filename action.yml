@@ -1,8 +1,9 @@
 name: "Watermelon"
 description: "Get code context using Watermelon"
-outputs:
-  time: # id of output
-    description: "The time we greeted you"
+author: "Watermelon Tools, Inc"
+branding:
+  icon: "info"
+  color: "red"
 runs:
   using: "node16"
   main: "dist/index.js"

@@ -16294,7 +16294,7 @@ var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
 
-;// CONCATENATED MODULE: ./getData/github.ts
+;// CONCATENATED MODULE: ./getData/context.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -16304,112 +16304,100 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+const core = __nccwpck_require__(2556);
+const github = __nccwpck_require__(8348);
 const axios = __nccwpck_require__(4158);
-function getGithub() {
+function getContext() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
+        let commitList = [];
         yield axios
-            .post("http://app.watermelontools.com/api/github/getIssuesByCommits", {
-            user: "estebandalelr@gmail.com",
-            repo: "watermelon",
-            owner: "watermelontools",
-            commitList: "264ef7c1455b51f1cb65d4457aeaa700478c91f4",
+            .get(github.context.payload.pull_request._links.commits.href)
+            .then((response) => {
+            var _a;
+            for (let index = 0; index < ((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.length); index++) {
+                commitList.push(response.data[index].commit.message);
+            }
+        })
+            .catch((error) => {
+            console.error(error.message);
+        });
+        yield axios
+            .post("http://app.watermelontools.com/api/actions/getContext", {
+            user: github.context.payload.pull_request.user.login,
+            repo: github.context.payload.repository.name,
+            owner: github.context.payload.repository.owner.login,
+            commitList: commitList.toString(),
+            title: github.context.payload.pull_request.title,
+            body: github.context.payload.pull_request.body,
         })
             .then((response) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
             textToWrite += "### GitHub PRs";
-            for (let index = 0; index < response.data.items.length; index++) {
-                const element = response.data.items[index];
-                textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
-                textToWrite += `\n`;
-                // shortcircuit to three results
-                if (index === 2) {
-                    textToWrite += `and ${response.data.items.length - 3} more`;
-                    break;
+            if ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.ghValue) === null || _b === void 0 ? void 0 : _b.length) {
+                for (let index = 0; index < ((_d = (_c = response.data) === null || _c === void 0 ? void 0 : _c.ghValue) === null || _d === void 0 ? void 0 : _d.length); index++) {
+                    const element = response.data.ghValue[index];
+                    textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
+                    textToWrite += `\n`;
+                    // shortcircuit to three results
+                    if (index === 2) {
+                        textToWrite += `and ${response.data.ghValue.length - 3} more`;
+                        break;
+                    }
                 }
             }
-        })
-            .catch((error) => {
-            console.log(error.message);
-        });
-        return textToWrite;
-    });
-}
-
-;// CONCATENATED MODULE: ./getData/jira.ts
-var jira_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-const jira_axios = __nccwpck_require__(4158);
-function getJira() {
-    return jira_awaiter(this, void 0, void 0, function* () {
-        let textToWrite = "";
-        yield jira_axios
-            .post("http://app.watermelontools.com/api/jira/getMostRelevantJiraTicket", {
-            user: "estebandalelr@gmail.com",
-            prTitle: "WM-49: Create payments success page",
-        })
-            .then((response) => {
+            else {
+                textToWrite += `\n No results found :(`;
+            }
+            textToWrite += `\n`;
             textToWrite += "### Jira Tickets";
-            for (let index = 0; index < response.data.length; index++) {
-                const element = response.data[index];
-                textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
-                textToWrite += `\n`;
-                // shortcircuit to three results
-                if (index === 2) {
-                    textToWrite += `and ${response.data.length - 3} more`;
-                    break;
+            if (response.data.jiraValue.error === "no jira token") {
+                textToWrite += `\n [Click here to login to Jira](https://app.watermelontools.com)`;
+            }
+            else {
+                if ((_f = (_e = response === null || response === void 0 ? void 0 : response.data) === null || _e === void 0 ? void 0 : _e.jiraValue) === null || _f === void 0 ? void 0 : _f.length) {
+                    for (let index = 0; index < response.data.jiraValue.length; index++) {
+                        const element = response.data.jiraValue[index];
+                        textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
+                        textToWrite += `\n`;
+                        // shortcircuit to three results
+                        if (index === 2) {
+                            textToWrite += `and ${response.data.jiraValue.length - 3} more`;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    textToWrite += `\n No results found :(`;
                 }
             }
-        })
-            .catch((error) => {
-            console.log(error.message);
-        });
-        return textToWrite;
-    });
-}
-
-;// CONCATENATED MODULE: ./getData/slack.ts
-var slack_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-const slack_axios = __nccwpck_require__(4158);
-function getSlack() {
-    return slack_awaiter(this, void 0, void 0, function* () {
-        let textToWrite = "";
-        yield slack_axios
-            .post("http://app.watermelontools.com/api/slack/searchMessagesByText", {
-            user: "estebandalelr@gmail.com",
-            text: "action github",
-        })
-            .then((response) => {
+            textToWrite += `\n`;
             textToWrite += "### Slack Threads";
-            for (let index = 0; index < response.data.messages.matches.length; index++) {
-                const element = response.data.messages.matches[index];
-                textToWrite += `\n - [#${element.channel.name} - ${element.username}\n ${element.text.length > 100
-                    ? element.text.substring(0, 100) + "..."
-                    : element.text}](${element.permalink})`;
-                textToWrite += `\n`;
-                // shortcircuit to three results
-                if (index === 2) {
-                    textToWrite += `and ${response.data.messages.matches.length - 3} more`;
-                    break;
+            if (response.data.slackValue.error === "no slack token") {
+                textToWrite += `\n [Click here to login to Slack](https://app.watermelontools.com)`;
+            }
+            else {
+                if ((_k = (_j = (_h = (_g = response === null || response === void 0 ? void 0 : response.data) === null || _g === void 0 ? void 0 : _g.slackValue) === null || _h === void 0 ? void 0 : _h.messages) === null || _j === void 0 ? void 0 : _j.matches) === null || _k === void 0 ? void 0 : _k.length) {
+                    for (let index = 0; index < response.data.slackValue.messages.matches.length; index++) {
+                        const element = response.data.slackValue.messages.matches[index];
+                        textToWrite += `\n - [#${element.channel.name} - ${element.username}\n ${element.text.length > 100
+                            ? element.text.substring(0, 100) + "..."
+                            : element.text}](${element.permalink})`;
+                        textToWrite += `\n`;
+                        // shortcircuit to three results
+                        if (index === 2) {
+                            textToWrite += `and ${response.data.slackValue.messages.matches.length - 3} more`;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    textToWrite += `\n No results found :(`;
                 }
             }
         })
             .catch((error) => {
-            console.log(error.message);
+            console.error(error.message);
         });
         return textToWrite;
     });
@@ -16417,14 +16405,12 @@ function getSlack() {
 
 ;// CONCATENATED MODULE: ./index.ts
 
-
-
-const core = __nccwpck_require__(2556);
-const github = __nccwpck_require__(8348);
+const index_core = __nccwpck_require__(2556);
+const index_github = __nccwpck_require__(8348);
 try {
     // Get the JSON webhook payload for the event that triggered the workflow
     let textToWrite = "## Context by Watermelon\n";
-    let getDataPromises = [getGithub(), getJira(), getSlack()];
+    let getDataPromises = [getContext()];
     Promise.all(getDataPromises)
         .then((values) => {
         values.forEach((value) => {
@@ -16436,11 +16422,11 @@ try {
         console.log(error.message);
     })
         .finally(() => {
-        core.setOutput("textToWrite", textToWrite);
+        index_core.setOutput("textToWrite", textToWrite);
     });
 }
 catch (error) {
-    core.setFailed(error.message);
+    index_core.setFailed(error.message);
 }
 
 })();
