@@ -17,7 +17,8 @@ Copy and paste the following snippet into your .yml file
   uses: watermelontools/watermelon-context-action@v1.0`
 
 or create a "watermelon.yml" file in ".github/workflows"
-`on: [pull_request]
+```
+on: [pull_request]
 
 jobs:
   getdata:
@@ -28,7 +29,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Watermelon-context-action
         uses: watermelontools/watermelon-context-action@v1.0
-`
+```
+
 After this, you can [start by logging in](https://app.watermelontools.com). You will be asked to give us read access to your GitHub organization, and optionally, to your Jira and Slack teams. 
 
 ## Features
