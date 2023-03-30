@@ -2,7 +2,7 @@
 
 [![Report an issue](https://img.shields.io/badge/-Report%20an%20issue-critical)](https://github.com/watermelontools/watermelon-context-action/issues/new)
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/watermelontools/watermelon-extension?style=flat-square)](https://github.com/watermelontools/watermelon-context-action/stargazers)
+[![GitHub Repo stars](https://img.shields.io/github/stars/watermelontools/watermelon-context-action?style=flat-square)](https://github.com/watermelontools/watermelon-context-action/stargazers)
 [![Twitter Follow](https://img.shields.io/twitter/follow/WatermelonTools?style=flat-square)](https://twitter.com/intent/follow?screen_name=WatermelonTools)
 [![Discord](https://img.shields.io/discord/933846506438541492?style=flat-square)](https://discord.com/invite/H4AE6b9442)
 
@@ -13,8 +13,10 @@ Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message t
 ## Installation
 Copy and paste the following snippet into your .yml file
 
-`- name: Watermelon-context-action
-  uses: watermelontools/watermelon-context-action@v1.0`
+```
+- name: Watermelon-context-action
+  uses: watermelontools/watermelon-context-action@v1.0
+```
 
 or create a "watermelon.yml" file in ".github/workflows"
 ```
