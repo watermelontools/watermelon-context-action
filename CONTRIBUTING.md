@@ -15,6 +15,7 @@ Remember, we'll discuss it publicly, it's a great opportunity to learn.
 
 ### Sources
 - [GitHub Actions API](https://docs.github.com/en/rest/actions?apiVersion=2022-11-28)
+- [Pull Requests Payload](https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request)
 - [Octokit](https://octokit.github.io/)
 
 ## Brand
