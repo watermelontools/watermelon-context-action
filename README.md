@@ -18,6 +18,7 @@ Copy and paste the following snippet into your .yml file
 
 or create a "watermelon.yml" file in ".github/workflows"
 ```
+name: watermelon-context
 on: [pull_request]
 
 jobs:
