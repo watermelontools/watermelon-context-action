@@ -16271,6 +16271,23 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__nccwpck_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -16291,10 +16308,10 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-// ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
-
-;// CONCATENATED MODULE: ./getData/context.ts
+/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ getContext)
+/* harmony export */ });
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -16311,17 +16328,23 @@ function getContext() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
         let commitList = [];
+        console.log("Getting commits");
         yield axios
             .get(github.context.payload.pull_request._links.commits.href)
             .then((response) => {
             var _a;
+            console.log("commitList status: ", response.status);
+            console.log("commitList: ", response.data);
             for (let index = 0; index < ((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.length); index++) {
                 commitList.push(response.data[index].commit.message);
             }
         })
             .catch((error) => {
+            console.log(error.message);
             console.error(error.message);
         });
+        console.log("Got commits");
+        console.log("Getting context");
         yield axios
             .post("http://app.watermelontools.com/api/actions/getContext", {
             user: github.context.payload.pull_request.user.login,
@@ -16334,9 +16357,8 @@ function getContext() {
         })
             .then((response) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
-            if (core.isDebug()) {
-                console.log(response);
-            }
+            console.log(response.status);
+            console.log(response.data);
             textToWrite += "### GitHub PRs";
             if ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.ghValue) === null || _b === void 0 ? void 0 : _b.length) {
                 for (let index = 0; index < ((_d = (_c = response.data) === null || _c === void 0 ? void 0 : _c.ghValue) === null || _d === void 0 ? void 0 : _d.length); index++) {
@@ -16401,36 +16423,33 @@ function getContext() {
             }
         })
             .catch((error) => {
+            console.log(error.message);
             console.error(error.message);
         });
+        console.log("Got context inside");
         return textToWrite;
     });
 }
-
-;// CONCATENATED MODULE: ./index.ts
-
-const index_core = __nccwpck_require__(2556);
-const index_github = __nccwpck_require__(8348);
 try {
-    // Get the JSON webhook payload for the event that triggered the workflow
     let textToWrite = "## Context by Watermelon\n";
-    let getDataPromises = [getContext()];
-    Promise.all(getDataPromises)
+    Promise.all([getContext()])
         .then((values) => {
+        console.log("Got context");
         values.forEach((value) => {
             textToWrite += value;
             textToWrite += "\n";
         });
     })
         .catch((error) => {
-        console.log(error.message);
+        console.log("Context error", error);
     })
         .finally(() => {
-        index_core.setOutput("textToWrite", textToWrite);
+        core.setOutput("textToWrite", textToWrite);
     });
 }
 catch (error) {
-    index_core.setFailed(error.message);
+    console.log("Promise error");
+    core.setFailed(error);
 }
 
 })();
