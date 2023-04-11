@@ -16333,6 +16333,9 @@ function getContext() {
         })
             .then((response) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+            if (core.isDebug()) {
+                console.log(response);
+            }
             textToWrite += "### GitHub PRs";
             if ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.ghValue) === null || _b === void 0 ? void 0 : _b.length) {
                 for (let index = 0; index < ((_d = (_c = response.data) === null || _c === void 0 ? void 0 : _c.ghValue) === null || _d === void 0 ? void 0 : _d.length); index++) {
