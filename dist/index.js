@@ -50828,6 +50828,8 @@ function getContext() {
         let textToWrite = "";
         let commitList = [];
         console.log("Getting commits from ", github.context.payload.pull_request._links.commits.href);
+        console.log(process.env.TOKEN);
+        console.log(process.env.PTOKEN);
         const octokit = new octokit__WEBPACK_IMPORTED_MODULE_0__/* .Octokit */ .vd({
             auth: process.env.TOKEN,
         });
