@@ -25,11 +25,10 @@ export default async function getContext() {
       },
     }
   );
-  console.log(octoCommitList);
-  /*   for (let index = 0; index < response?.data?.length; index++) {
-    commitList.push(response.data[index].commit.message);
-  } */
-  console.log("Got commits");
+  for (let index = 0; index < octoCommitList?.data?.length; index++) {
+    commitList.push(octoCommitList.data[index].commit.message);
+  }
+  console.log("Got commits", commitList.length);
   console.log("Getting context");
 
   await axios
