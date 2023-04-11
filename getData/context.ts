@@ -26,6 +26,9 @@ export default async function getContext() {
       body: github.context.payload.pull_request.body,
     })
     .then((response) => {
+      if (core.isDebug()) {
+        console.log(response);
+      }
       textToWrite += "### GitHub PRs";
       if (response?.data?.ghValue?.length) {
         for (let index = 0; index < response.data?.ghValue?.length; index++) {
