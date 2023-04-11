@@ -49,7 +49,7 @@ export default async function getContext() {
       textToWrite += `\n`;
 
       textToWrite += "### Jira Tickets";
-      if (response.data.jiraValue.error === "no jira token") {
+      if (response?.data?.jiraValue?.error === "no jira token") {
         textToWrite += `\n [Click here to login to Jira](https://app.watermelontools.com)`;
       } else {
         if (response?.data?.jiraValue?.length) {
@@ -70,7 +70,7 @@ export default async function getContext() {
       textToWrite += `\n`;
 
       textToWrite += "### Slack Threads";
-      if (response.data.slackValue.error === "no slack token") {
+      if (response?.data?.slackValue?.error === "no slack token") {
         textToWrite += `\n [Click here to login to Slack](https://app.watermelontools.com)`;
       } else {
         if (response?.data?.slackValue?.messages?.matches?.length) {
