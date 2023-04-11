@@ -50759,23 +50759,6 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__nccwpck_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -50806,9 +50789,6 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 __nccwpck_require__.r(__webpack_exports__);
-/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ getContext)
-/* harmony export */ });
 /* harmony import */ var octokit__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(7360);
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -50823,6 +50803,35 @@ const core = __nccwpck_require__(2556);
 const github = __nccwpck_require__(8348);
 
 const axios = __nccwpck_require__(4158);
+function createOrUpdateComment(octokit, prNumber, body) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const owner = github.context.payload.repository.owner.login;
+        const repo = github.context.payload.repository.name;
+        const { data: comments } = yield octokit.rest.issues.listComments({
+            owner,
+            repo,
+            issue_number: prNumber,
+        });
+        const existingComment = comments.find((comment) => comment.user.login === "github-actions[bot]" &&
+            comment.body.includes("## Context by Watermelon"));
+        if (existingComment) {
+            yield octokit.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existingComment.id,
+                body,
+            });
+        }
+        else {
+            yield octokit.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body,
+            });
+        }
+    });
+}
 function getContext() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -50927,27 +50936,22 @@ function getContext() {
         return textToWrite;
     });
 }
-try {
-    let textToWrite = "## Context by Watermelon\n";
-    Promise.all([getContext()])
-        .then((values) => {
-        console.log("Got context");
-        values.forEach((value) => {
-            textToWrite += value;
-            textToWrite += "\n";
-        });
-    })
-        .catch((error) => {
-        console.log("Context error", error);
-    })
-        .finally(() => {
-        core.setOutput("textToWrite", textToWrite);
+(function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const token = core.getInput("token");
+            const prNumber = github.context.payload.pull_request.number;
+            const octokit = new octokit__WEBPACK_IMPORTED_MODULE_0__/* .Octokit */ .vd({ auth: token });
+            let textToWrite = "## Context by Watermelon\n";
+            const context = yield getContext();
+            textToWrite += context;
+            yield createOrUpdateComment(octokit, prNumber, textToWrite);
+        }
+        catch (error) {
+            core.setFailed(error);
+        }
     });
-}
-catch (error) {
-    console.log("Promise error");
-    core.setFailed(error);
-}
+})();
 
 })();
 
