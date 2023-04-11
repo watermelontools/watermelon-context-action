@@ -13,6 +13,7 @@ export default async function getContext() {
       }
     })
     .catch((error) => {
+      console.log(error.message);
       console.error(error.message);
     });
 
@@ -102,6 +103,7 @@ export default async function getContext() {
       }
     })
     .catch((error) => {
+      console.log(error.message);
       console.error(error.message);
     });
 
