@@ -29,7 +29,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Watermelon-context-action
-        uses: watermelontools/watermelon-context-action@master
+        uses: watermelontools/watermelon-context-action@latest
 ```
 
 After this, you can [start by logging in](https://app.watermelontools.com). You will be asked to give us read access to your GitHub organization, and optionally, to your Jira and Slack teams. 
