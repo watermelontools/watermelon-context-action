@@ -14,7 +14,9 @@ jobs:
         id: watermelon
         uses: ./
         inputs:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token:
+            description: "The GitHub token used for authentication"
+            required: true
   writedata:
     runs-on: ubuntu-latest
     needs: getdata
