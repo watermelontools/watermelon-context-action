@@ -9,10 +9,10 @@ export default async function getContext() {
     "Getting commits from ",
     github.context.payload.pull_request._links.commits.href
   );
-  console.log(process.env.TOKEN);
-  console.log(process.env.PTOKEN);
+  const token: string = core.getInput("token");
+
   const octokit = new Octokit({
-    auth: process.env.TOKEN,
+    auth: token,
   });
   let octoCommitList = await octokit.request(
     "GET /repos/{owner}/{repo}/pulls/{pull_number}/commits",
