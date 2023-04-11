@@ -8,6 +8,8 @@ export default async function getContext() {
   await axios
     .get(github.context.payload.pull_request._links.commits.href)
     .then((response) => {
+      console.log("commitList status: ", response.status)
+      console.log("commitList: ", response.data)
       for (let index = 0; index < response?.data?.length; index++) {
         commitList.push(response.data[index].commit.message);
       }
@@ -28,7 +30,8 @@ export default async function getContext() {
       number: github.context.payload.pull_request.number,
     })
     .then((response) => {
-      console.log(response);
+      console.log(response.status);
+      console.log(response.data);
       textToWrite += "### GitHub PRs";
       if (response?.data?.ghValue?.length) {
         for (let index = 0; index < response.data?.ghValue?.length; index++) {
