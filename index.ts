@@ -2,7 +2,39 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 import { Octokit } from "octokit";
 const axios = require("axios");
-export default async function getContext() {
+async function createOrUpdateComment(octokit, prNumber, body) {
+  const owner = github.context.payload.repository.owner.login;
+  const repo = github.context.payload.repository.name;
+
+  const { data: comments } = await octokit.rest.issues.listComments({
+    owner,
+    repo,
+    issue_number: prNumber,
+  });
+
+  const existingComment = comments.find(
+    (comment) =>
+      comment.user.login === "github-actions[bot]" &&
+      comment.body.includes("## Context by Watermelon")
+  );
+
+  if (existingComment) {
+    await octokit.rest.issues.updateComment({
+      owner,
+      repo,
+      comment_id: existingComment.id,
+      body,
+    });
+  } else {
+    await octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: prNumber,
+      body,
+    });
+  }
+}
+async function getContext() {
   let textToWrite = "";
   let commitList = [];
   const token: string = core.getInput("token");
@@ -116,24 +148,19 @@ export default async function getContext() {
 
   return textToWrite;
 }
+(async function main() {
+  try {
+    const token = core.getInput("token");
+    const prNumber = github.context.payload.pull_request.number;
 
-try {
-  let textToWrite = "## Context by Watermelon\n";
-  Promise.all([getContext()])
-    .then((values) => {
-      console.log("Got context");
-      values.forEach((value) => {
-        textToWrite += value;
-        textToWrite += "\n";
-      });
-    })
-    .catch((error) => {
-      console.log("Context error", error);
-    })
-    .finally(() => {
-      core.setOutput("textToWrite", textToWrite);
-    });
-} catch (error) {
-  console.log("Promise error");
-  core.setFailed(error);
-}
+    const octokit = new Octokit({ auth: token });
+
+    let textToWrite = "## Context by Watermelon\n";
+    const context = await getContext();
+    textToWrite += context;
+
+    await createOrUpdateComment(octokit, prNumber, textToWrite);
+  } catch (error) {
+    core.setFailed(error);
+  }
+})();
