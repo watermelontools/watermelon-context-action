@@ -16330,7 +16330,11 @@ function getContext() {
         let commitList = [];
         console.log("Getting commits from ", github.context.payload.pull_request._links.commits.href);
         yield axios
-            .get(github.context.payload.pull_request._links.commits.href)
+            .get(github.context.payload.pull_request._links.commits.href, {
+            headers: {
+                Authorization: `Bearer ${process.env.TOKEN}`,
+            },
+        })
             .then((response) => {
             var _a;
             console.log("commitList status: ", response.status);
