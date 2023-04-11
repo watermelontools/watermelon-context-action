@@ -5,10 +5,6 @@ const axios = require("axios");
 export default async function getContext() {
   let textToWrite = "";
   let commitList = [];
-  console.log(
-    "Getting commits from ",
-    github.context.payload.pull_request._links.commits.href
-  );
   const token: string = core.getInput("token");
 
   const octokit = new Octokit({
@@ -42,8 +38,6 @@ export default async function getContext() {
       number: github.context.payload.pull_request.number,
     })
     .then((response) => {
-      console.log(response.status);
-      console.log(response.data);
       textToWrite += "### GitHub PRs";
       if (response?.data?.ghValue?.length) {
         for (let index = 0; index < response.data?.ghValue?.length; index++) {
@@ -116,10 +110,9 @@ export default async function getContext() {
       }
     })
     .catch((error) => {
-      console.log("get context error ", error.message);
       console.error("get context error ", error.message);
     });
-  console.log("Got context inside");
+  console.log("textToWrite", textToWrite);
 
   return textToWrite;
 }
