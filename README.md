@@ -14,7 +14,7 @@ Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message t
 Copy and paste the following snippet into your .yml file
 
 `- name: Watermelon-context-action
-  uses: watermelontools/watermelon-context-action@v1.0`
+  uses: watermelontools/watermelon-context-action@main`
 
 or create a "watermelon.yml" file in ".github/workflows"
 ```
