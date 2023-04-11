@@ -5,7 +5,10 @@ const axios = require("axios");
 export default async function getContext() {
   let textToWrite = "";
   let commitList = [];
-  console.log("Getting commits");
+  console.log(
+    "Getting commits from ",
+    github.context.payload.pull_request._links.commits.href
+  );
   await axios
     .get(github.context.payload.pull_request._links.commits.href)
     .then((response) => {
@@ -16,8 +19,8 @@ export default async function getContext() {
       }
     })
     .catch((error) => {
-      console.log(error.message);
-      console.error(error.message);
+      console.log("get commits error ", error);
+      console.error("get commits error ", error);
     });
   console.log("Got commits");
   console.log("Getting context");
@@ -107,8 +110,8 @@ export default async function getContext() {
       }
     })
     .catch((error) => {
-      console.log(error.message);
-      console.error(error.message);
+      console.log("get context error ", error.message);
+      console.error("get context error ", error.message);
     });
   console.log("Got context inside");
 
