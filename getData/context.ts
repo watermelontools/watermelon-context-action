@@ -24,6 +24,7 @@ export default async function getContext() {
       commitList: commitList.toString(),
       title: github.context.payload.pull_request.title,
       body: github.context.payload.pull_request.body,
+      number: github.context.payload.pull_request.number,
     })
     .then((response) => {
       if (core.isDebug()) {
