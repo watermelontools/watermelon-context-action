@@ -1,42 +1,14 @@
+name: watermelon-context
 on: [pull_request]
 
 jobs:
   getcontext:
     runs-on: ubuntu-latest
-    name: Get Context
+    name: Get code context with Watermelon
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Get code context
-        id: get_context
-        uses: ./
+      - name: Watermelon-context-action
+        uses: watermelontools/watermelon-context-action@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Find Comment
-        continue-on-error: true
-        uses: peter-evans/find-comment@v2
-        id: find_comment
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: Context by Watermelon
-
-      - name: Create comment
-        id: create_comment
-        uses: peter-evans/create-or-update-comment@v2
-        if: steps.find_comment.outputs.comment-id == ''
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: ${{ steps.get_context.outputs.textToWrite }}
-
-      - name: Update comment
-        id: update_comment
-        uses: peter-evans/create-or-update-comment@v2
-        if: steps.find_comment.outputs.comment-id != ''
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-id: ${{ steps.find_comment.outputs.comment-id }}
-          body: ${{ steps.get_context.outputs.textToWrite }}
-          edit-mode: replace
