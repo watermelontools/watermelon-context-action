@@ -50828,7 +50828,6 @@ function getContext() {
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
         let commitList = [];
-        console.log("Getting commits from ", github.context.payload.pull_request._links.commits.href);
         const token = core.getInput("token");
         const octokit = new octokit__WEBPACK_IMPORTED_MODULE_0__/* .Octokit */ .vd({
             auth: token,
@@ -50858,8 +50857,6 @@ function getContext() {
         })
             .then((response) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
-            console.log(response.status);
-            console.log(response.data);
             textToWrite += "### GitHub PRs";
             if ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.ghValue) === null || _b === void 0 ? void 0 : _b.length) {
                 for (let index = 0; index < ((_d = (_c = response.data) === null || _c === void 0 ? void 0 : _c.ghValue) === null || _d === void 0 ? void 0 : _d.length); index++) {
@@ -50924,10 +50921,9 @@ function getContext() {
             }
         })
             .catch((error) => {
-            console.log("get context error ", error.message);
             console.error("get context error ", error.message);
         });
-        console.log("Got context inside");
+        console.log("textToWrite", textToWrite);
         return textToWrite;
     });
 }
