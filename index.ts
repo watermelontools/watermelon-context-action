@@ -9,6 +9,8 @@ export default async function getContext() {
     "Getting commits from ",
     github.context.payload.pull_request._links.commits.href
   );
+  console.log(process.env.TOKEN);
+  console.log(process.env.PTOKEN);
   const octokit = new Octokit({
     auth: process.env.TOKEN,
   });
