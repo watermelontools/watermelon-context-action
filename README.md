@@ -16,20 +16,22 @@ Copy and paste the following snippet into your .yml file
 `- name: Watermelon-context-action
   uses: watermelontools/watermelon-context-action@main`
 
-or create a "watermelon.yml" file in ".github/workflows"
+or create a "watermelon.yml" file in ".github/workflows/"
 ```
 name: watermelon-context
 on: [pull_request]
 
 jobs:
-  getdata:
+  getcontext:
     runs-on: ubuntu-latest
     name: Get code context with Watermelon
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Watermelon-context-action
-        uses: watermelontools/watermelon-context-action@latest
+        uses: watermelontools/watermelon-context-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 After this, you can [start by logging in](https://app.watermelontools.com). You will be asked to give us read access to your GitHub organization, and optionally, to your Jira and Slack teams. 
