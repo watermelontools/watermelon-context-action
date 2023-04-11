@@ -50824,6 +50824,7 @@ const github = __nccwpck_require__(8348);
 
 const axios = __nccwpck_require__(4158);
 function getContext() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         let textToWrite = "";
         let commitList = [];
@@ -50840,11 +50841,10 @@ function getContext() {
                 "X-GitHub-Api-Version": "2022-11-28",
             },
         });
-        console.log(octoCommitList);
-        /*   for (let index = 0; index < response?.data?.length; index++) {
-          commitList.push(response.data[index].commit.message);
-        } */
-        console.log("Got commits");
+        for (let index = 0; index < ((_a = octoCommitList === null || octoCommitList === void 0 ? void 0 : octoCommitList.data) === null || _a === void 0 ? void 0 : _a.length); index++) {
+            commitList.push(octoCommitList.data[index].commit.message);
+        }
+        console.log("Got commits", commitList.length);
         console.log("Getting context");
         yield axios
             .post("http://app.watermelontools.com/api/actions/getContext", {
