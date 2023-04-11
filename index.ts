@@ -1,6 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-
+import { Octokit } from "octokit";
 const axios = require("axios");
 export default async function getContext() {
   let textToWrite = "";
@@ -9,23 +9,24 @@ export default async function getContext() {
     "Getting commits from ",
     github.context.payload.pull_request._links.commits.href
   );
-  await axios
-    .get(github.context.payload.pull_request._links.commits.href, {
+  const octokit = new Octokit({
+    auth: process.env.TOKEN,
+  });
+  let octoCommitList = await octokit.request(
+    "GET /repos/{owner}/{repo}/pulls/{pull_number}/commits",
+    {
+      repo: github.context.payload.repository.name,
+      owner: github.context.payload.repository.owner.login,
+      pull_number: github.context.payload.pull_request.number,
       headers: {
-        Authorization: `Bearer ${process.env.TOKEN}`,
+        "X-GitHub-Api-Version": "2022-11-28",
       },
-    })
-    .then((response) => {
-      console.log("commitList status: ", response.status);
-      console.log("commitList: ", response.data);
-      for (let index = 0; index < response?.data?.length; index++) {
-        commitList.push(response.data[index].commit.message);
-      }
-    })
-    .catch((error) => {
-      console.log("get commits error ", error);
-      console.error("get commits error ", error);
-    });
+    }
+  );
+  console.log(octoCommitList);
+  /*   for (let index = 0; index < response?.data?.length; index++) {
+    commitList.push(response.data[index].commit.message);
+  } */
   console.log("Got commits");
   console.log("Getting context");
 
