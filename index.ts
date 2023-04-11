@@ -10,7 +10,11 @@ export default async function getContext() {
     github.context.payload.pull_request._links.commits.href
   );
   await axios
-    .get(github.context.payload.pull_request._links.commits.href)
+    .get(github.context.payload.pull_request._links.commits.href, {
+      headers: {
+        Authorization: `Bearer ${process.env.TOKEN}`,
+      },
+    })
     .then((response) => {
       console.log("commitList status: ", response.status);
       console.log("commitList: ", response.data);

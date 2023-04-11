@@ -11,6 +11,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Watermelon context
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         id: watermelon
         uses: ./
   writedata:
