@@ -6,7 +6,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/WatermelonTools?style=flat-square)](https://twitter.com/intent/follow?screen_name=WatermelonTools)
 [![Discord](https://img.shields.io/discord/933846506438541492?style=flat-square)](https://discord.com/invite/H4AE6b9442)
 
-Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providind business logic context to GitHub PRs. 
+Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providing business logic context to GitHub PRs. 
 
 Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message thread for a new PR. This way, we help you make the code review process faster and in a more informed way. 
 
