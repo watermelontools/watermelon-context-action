@@ -6,31 +6,33 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/WatermelonTools?style=flat-square)](https://twitter.com/intent/follow?screen_name=WatermelonTools)
 [![Discord](https://img.shields.io/discord/933846506438541492?style=flat-square)](https://discord.com/invite/H4AE6b9442)
 
-Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providind business logic context to GitHub PRs. 
+Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providing business logic context to GitHub PRs. 
 
 Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message thread for a new PR. This way, we help you make the code review process faster and in a more informed way. 
 
 ## Installation
 Copy and paste the following snippet into your .yml file
 
-```
-- name: Watermelon-context-action
-  uses: watermelontools/watermelon-context-action@v1.0
+````- name: Watermelon-context-action
+  uses: watermelontools/watermelon-context-action@main
 ```
 
-or create a "watermelon.yml" file in ".github/workflows"
+or create a "watermelon.yml" file in ".github/workflows/"
 ```
+name: watermelon-context
 on: [pull_request]
 
 jobs:
-  getdata:
+  getcontext:
     runs-on: ubuntu-latest
     name: Get code context with Watermelon
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Watermelon-context-action
-        uses: watermelontools/watermelon-context-action@v1.0
+        uses: watermelontools/watermelon-context-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 After this, you can [start by logging in](https://app.watermelontools.com). You will be asked to give us read access to your GitHub organization, and optionally, to your Jira and Slack teams. 

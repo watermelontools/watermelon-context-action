@@ -1,45 +1,14 @@
+name: watermelon-context
 on: [pull_request]
 
 jobs:
-  getdata:
+  getcontext:
     runs-on: ubuntu-latest
-    name: Get code context
-    # Map a step output to a job output
-    outputs:
-      result: ${{ steps.watermelon.outputs.textToWrite }}
+    name: Get code context with Watermelon
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Watermelon context
-        id: watermelon
-        uses: ./
-  writedata:
-    runs-on: ubuntu-latest
-    needs: getdata
-    name: Write a comment
-    steps:
-      - name: Find Comment
-        continue-on-error: true
-        uses: peter-evans/find-comment@v2
-        id: fc
+      - name: Watermelon-context-action
+        uses: watermelontools/watermelon-context-action@main
         with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: Context by Watermelon
-      - name: Create comment
-        id: cc
-        uses: peter-evans/create-or-update-comment@v2
-        if: steps.fc.outputs.comment-id == ''
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: ${{ needs.getdata.outputs.result }}
-
-      - name: Update comment
-        id: uc
-        if: steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          body: ${{ needs.getdata.outputs.result }}
-          edit-mode: replace
+          token: ${{ secrets.GITHUB_TOKEN }}
