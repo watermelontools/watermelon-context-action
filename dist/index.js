@@ -50865,10 +50865,19 @@ function getContext() {
             number: github.context.payload.pull_request.number,
         })
             .then((response) => {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
+            textToWrite += "### WatermelonAI Summary";
+            if ((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.businessLogicSummary) {
+                textToWrite += (_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.businessLogicSummary;
+                textToWrite += `\n`;
+            }
+            else {
+                textToWrite +=
+                    "Error getting summary" + ((_c = response === null || response === void 0 ? void 0 : response.data) === null || _c === void 0 ? void 0 : _c.businessLogicSummary.error);
+            }
             textToWrite += "### GitHub PRs";
-            if ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.ghValue) === null || _b === void 0 ? void 0 : _b.length) {
-                for (let index = 0; index < ((_d = (_c = response.data) === null || _c === void 0 ? void 0 : _c.ghValue) === null || _d === void 0 ? void 0 : _d.length); index++) {
+            if ((_e = (_d = response === null || response === void 0 ? void 0 : response.data) === null || _d === void 0 ? void 0 : _d.ghValue) === null || _e === void 0 ? void 0 : _e.length) {
+                for (let index = 0; index < ((_g = (_f = response.data) === null || _f === void 0 ? void 0 : _f.ghValue) === null || _g === void 0 ? void 0 : _g.length); index++) {
                     const element = response.data.ghValue[index];
                     textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
                     textToWrite += `\n`;
@@ -50884,11 +50893,11 @@ function getContext() {
             }
             textToWrite += `\n`;
             textToWrite += "### Jira Tickets";
-            if (((_f = (_e = response === null || response === void 0 ? void 0 : response.data) === null || _e === void 0 ? void 0 : _e.jiraValue) === null || _f === void 0 ? void 0 : _f.error) === "no jira token") {
+            if (((_j = (_h = response === null || response === void 0 ? void 0 : response.data) === null || _h === void 0 ? void 0 : _h.jiraValue) === null || _j === void 0 ? void 0 : _j.error) === "no jira token") {
                 textToWrite += `\n [Click here to login to Jira](https://app.watermelontools.com)`;
             }
             else {
-                if ((_h = (_g = response === null || response === void 0 ? void 0 : response.data) === null || _g === void 0 ? void 0 : _g.jiraValue) === null || _h === void 0 ? void 0 : _h.length) {
+                if ((_l = (_k = response === null || response === void 0 ? void 0 : response.data) === null || _k === void 0 ? void 0 : _k.jiraValue) === null || _l === void 0 ? void 0 : _l.length) {
                     for (let index = 0; index < response.data.jiraValue.length; index++) {
                         const element = response.data.jiraValue[index];
                         textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
@@ -50906,11 +50915,11 @@ function getContext() {
             }
             textToWrite += `\n`;
             textToWrite += "### Slack Threads";
-            if (((_k = (_j = response === null || response === void 0 ? void 0 : response.data) === null || _j === void 0 ? void 0 : _j.slackValue) === null || _k === void 0 ? void 0 : _k.error) === "no slack token") {
+            if (((_o = (_m = response === null || response === void 0 ? void 0 : response.data) === null || _m === void 0 ? void 0 : _m.slackValue) === null || _o === void 0 ? void 0 : _o.error) === "no slack token") {
                 textToWrite += `\n [Click here to login to Slack](https://app.watermelontools.com)`;
             }
             else {
-                if ((_p = (_o = (_m = (_l = response === null || response === void 0 ? void 0 : response.data) === null || _l === void 0 ? void 0 : _l.slackValue) === null || _m === void 0 ? void 0 : _m.messages) === null || _o === void 0 ? void 0 : _o.matches) === null || _p === void 0 ? void 0 : _p.length) {
+                if ((_s = (_r = (_q = (_p = response === null || response === void 0 ? void 0 : response.data) === null || _p === void 0 ? void 0 : _p.slackValue) === null || _q === void 0 ? void 0 : _q.messages) === null || _r === void 0 ? void 0 : _r.matches) === null || _s === void 0 ? void 0 : _s.length) {
                     for (let index = 0; index < response.data.slackValue.messages.matches.length; index++) {
                         const element = response.data.slackValue.messages.matches[index];
                         textToWrite += `\n - [#${element.channel.name} - ${element.username}\n ${element.text.length > 100
