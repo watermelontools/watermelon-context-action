@@ -11,13 +11,8 @@ Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code revie
 Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message thread for a new PR. This way, we help you make the code review process faster and in a more informed way. 
 
 ## Installation
-Copy and paste the following snippet into your .yml file
+Create a "watermelon.yml" file in ".github/workflows/". Then, copy and paste the following snippet into your .yml file
 
-````- name: Watermelon-context-action
-  uses: watermelontools/watermelon-context-action@main
-```
-
-or create a "watermelon.yml" file in ".github/workflows/"
 ```
 name: watermelon-context
 on: [pull_request]
