@@ -70,6 +70,14 @@ async function getContext() {
       number: github.context.payload.pull_request.number,
     })
     .then((response) => {
+      textToWrite += "### WatermelonAI Summary";
+      if (response?.data?.businessLogicSummary) {
+        textToWrite += response?.data?.businessLogicSummary;
+        textToWrite += `\n`;
+      } else {
+        textToWrite +=
+          "Error getting summary" + response?.data?.businessLogicSummary.error;
+      }
       textToWrite += "### GitHub PRs";
       if (response?.data?.ghValue?.length) {
         for (let index = 0; index < response.data?.ghValue?.length; index++) {
