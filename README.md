@@ -2,31 +2,32 @@
 
 [![Report an issue](https://img.shields.io/badge/-Report%20an%20issue-critical)](https://github.com/watermelontools/watermelon-context-action/issues/new)
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/watermelontools/watermelon-extension?style=flat-square)](https://github.com/watermelontools/watermelon-context-action/stargazers)
+[![GitHub Repo stars](https://img.shields.io/github/stars/watermelontools/watermelon-context-action?style=flat-square)](https://github.com/watermelontools/watermelon-context-action/stargazers)
 [![Twitter Follow](https://img.shields.io/twitter/follow/WatermelonTools?style=flat-square)](https://twitter.com/intent/follow?screen_name=WatermelonTools)
 [![Discord](https://img.shields.io/discord/933846506438541492?style=flat-square)](https://discord.com/invite/H4AE6b9442)
 
-Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providind business logic context to GitHub PRs.
+Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providing business logic context to GitHub PRs. 
 
 Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message thread for a new PR. This way, we help you make the code review process faster and in a more informed way.
 
 ## Installation
-
-Create a "watermelon.yml" file in ".github/workflows"
+Create a "watermelon.yml" file in ".github/workflows/". Then, copy and paste the following snippet into your .yml file
 
 ```
 name: watermelon-context
 on: [pull_request]
 
 jobs:
-  getdata:
+  getcontext:
     runs-on: ubuntu-latest
     name: Get code context with Watermelon
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Watermelon-context-action
-        uses: watermelontools/watermelon-context-action@v1.0
+        uses: watermelontools/watermelon-context-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 or copy and paste the following snippet into your .yml file
