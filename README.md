@@ -1,4 +1,5 @@
 # Watermelon Context GitHub Action
+[Install now](https://github.com/marketplace/actions/watermelon-context-action)
 
 [![Report an issue](https://img.shields.io/badge/-Report%20an%20issue-critical)](https://github.com/watermelontools/watermelon-context-action/issues/new)
 
