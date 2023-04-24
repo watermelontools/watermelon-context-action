@@ -50881,11 +50881,6 @@ function getContext() {
                     const element = response.data.ghValue[index];
                     textToWrite += `\n - [#${element.number} - ${element.title}](${element.html_url})`;
                     textToWrite += `\n`;
-                    // shortcircuit to three results
-                    if (index === 2) {
-                        textToWrite += `and ${response.data.ghValue.length - 3} more`;
-                        break;
-                    }
                 }
             }
             else {
@@ -50902,11 +50897,6 @@ function getContext() {
                         const element = response.data.jiraValue[index];
                         textToWrite += `\n - [${element.key} - ${element.fields.summary}](${element.serverInfo.baseUrl}/browse/${element.key})`;
                         textToWrite += `\n`;
-                        // shortcircuit to three results
-                        if (index === 2) {
-                            textToWrite += `and ${response.data.jiraValue.length - 3} more`;
-                            break;
-                        }
                     }
                 }
                 else {
@@ -50926,11 +50916,6 @@ function getContext() {
                             ? element.text.substring(0, 100) + "..."
                             : element.text}](${element.permalink})`;
                         textToWrite += `\n`;
-                        // shortcircuit to three results
-                        if (index === 2) {
-                            textToWrite += `and ${response.data.slackValue.messages.matches.length - 3} more`;
-                            break;
-                        }
                     }
                 }
                 else {

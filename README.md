@@ -9,7 +9,7 @@
 
 Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providing business logic context to GitHub PRs. 
 
-Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message thread for a new PR. This way, we help you make the code review process faster and in a more informed way. 
+Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message thread for a new PR. This way, we help you make the code review process faster and in a more informed way.
 
 ## Installation
 Create a "watermelon.yml" file in ".github/workflows/". Then, copy and paste the following snippet into your .yml file
@@ -31,25 +31,36 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-After this, you can [start by logging in](https://app.watermelontools.com). You will be asked to give us read access to your GitHub organization, and optionally, to your Jira and Slack teams. 
+or copy and paste the following snippet into your .yml file
+
+`- name: Watermelon-context-action
+  uses: watermelontools/watermelon-context-action@v1.0`
+
+After this, you can [start by logging in](https://app.watermelontools.com). You will be asked to give us read access to your GitHub organization, and optionally, to your Jira and Slack teams.
 
 ## Features
-You can find the roadmap for this product [here](https://github.com/orgs/watermelontools/projects/2/views/1). 
+
+You can find the roadmap for this product [here](https://github.com/orgs/watermelontools/projects/2/views/1).
 
 ### Create a Pull Request to Create Context
-The first feature for our alpha version is bringing the most relevant pieces of information from GitHub, Jira, and Slack for a new PR. 
+
+The first feature for our alpha version is bringing the most relevant pieces of information from GitHub, Jira, and Slack for a new PR.
 
 Soon, we will generate a GPT-powered summary of this indexed context.
 
 ## Contributing
+
 Check out [Contributing.md](CONTRIBUTING.md) and be aware of the [Code of Conduct](CODE_OF_CONDUCT.md)!
 
 We're an early stage project, therefore we still have the luxury to coordinate via short chats with our contributors. If you're interested in contributing, please join our [Discord](https://discord.com/invite/H4AE6b9442) community.
 Alternatively, comment on our issues if you plan to solve one.
 
 ## Analytics
-We are in the process of integrating [VS Code's telemetry library](https://github.com/microsoft/vscode-extension-telemetry). We're in the process of evaluating this alternative since we have a [VS Code extension](https://github.com/watermelontools/watermelon-extension) that complements this GitHub Action. 
+
+We are in the process of integrating [VS Code's telemetry library](https://github.com/microsoft/vscode-extension-telemetry). We're in the process of evaluating this alternative since we have a [VS Code extension](https://github.com/watermelontools/watermelon-extension) that complements this GitHub Action.
+
 ## Supporters
+
 [![Stargazers repo roster for @watermelontools/watermelon-context-action](https://reporoster.com/stars/watermelontools/watermelon-context-action)](https://github.com/watermelontools/watermelon-context-action/stargazers)
 
 [![Forkers repo roster for @watermelontools/watermelon-context-action](https://reporoster.com/forks/watermelontools/watermelon-context-action)](https://github.com/watermelontools/watermelon-context-action/network/members)
