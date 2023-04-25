@@ -71,6 +71,7 @@ async function getContext() {
     })
     .then((response) => {
       textToWrite += "### WatermelonAI Summary";
+      textToWrite += `\n`;
       if (response?.data?.businessLogicSummary) {
         textToWrite += response?.data?.businessLogicSummary;
         textToWrite += `\n`;
