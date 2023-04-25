@@ -50867,6 +50867,7 @@ function getContext() {
             .then((response) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
             textToWrite += "### WatermelonAI Summary";
+            textToWrite += `\n`;
             if ((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.businessLogicSummary) {
                 textToWrite += (_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.businessLogicSummary;
                 textToWrite += `\n`;
