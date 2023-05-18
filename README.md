@@ -12,7 +12,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/WatermelonTools?style=flat-square)](https://twitter.com/intent/follow?screen_name=WatermelonTools)
 [![Discord](https://img.shields.io/discord/933846506438541492?style=flat-square)](https://discord.com/invite/H4AE6b9442)
 
-Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providing business logic context to GitHub PRs. 
+Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code review process by providing business logic context to GitHub PRs.
 
 Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message thread for a new PR. This way, we help you make the code review process faster and in a more informed way.
 
@@ -73,7 +73,7 @@ We are in the process of integrating [VS Code's telemetry library](https://githu
 
 [![Forkers repo roster for @watermelontools/watermelon-context-action](https://reporoster.com/forks/watermelontools/watermelon-context-action)](https://github.com/watermelontools/watermelon-context-action/network/members)
 
-#### About Watermelon
+### About Watermelon
 
 Watermelon is built by a globally distributed team of developers devoted to making software development easier. Join our [Discord](https://discord.com/invite/H4AE6b9442) community, follow us on [Twitter](https://twitter.com/WatermelonTools) and go to the [Watermelon blog](https://watermelon.tools/blog/blog) to get the best programming tips.
 
