@@ -36,10 +36,6 @@ async function createOrUpdateComment(octokit, prNumber, body) {
 }
 async function getContext() {
   let textToWrite = "";
-  textToWrite += "> Deprecation Warning";
-  textToWrite += "> We now use the [Watermelon Context App](https://github.com/apps/watermelon-context), please install that.";
-  textToWrite += "> This action will have no further development";
-  textToWrite += `\n`;
 
   let commitList = [];
   const token: string = core.getInput("token");
@@ -153,6 +149,11 @@ async function getContext() {
     const octokit = new Octokit({ auth: token });
 
     let textToWrite = "## Context by Watermelon\n";
+    textToWrite += "> Deprecation Warning";
+    textToWrite += "> We now use the [Watermelon Context App](https://github.com/apps/watermelon-context), please install that.";
+    textToWrite += "> This action will have no further development";
+    textToWrite += `\n`;
+
     const context = await getContext();
     textToWrite += context;
 
