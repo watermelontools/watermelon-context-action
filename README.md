@@ -56,7 +56,7 @@ The first feature for our alpha version is bringing the most relevant pieces of 
 
 Soon, we will generate a GPT-powered summary of this indexed context.
 
-## Contributing
+## Contributing - Paused for deprecation
 
 Check out [Contributing.md](CONTRIBUTING.md) and be aware of the [Code of Conduct](CODE_OF_CONDUCT.md)!
 
