@@ -50938,6 +50938,10 @@ function getContext() {
             const prNumber = github.context.payload.pull_request.number;
             const octokit = new octokit__WEBPACK_IMPORTED_MODULE_0__/* .Octokit */ .vd({ auth: token });
             let textToWrite = "## Context by Watermelon\n";
+            textToWrite += "> Deprecation Warning";
+            textToWrite += "> We now use the [Watermelon Context App](https://github.com/apps/watermelon-context), please install that.";
+            textToWrite += "> This action will have no further development";
+            textToWrite += `\n`;
             const context = yield getContext();
             textToWrite += context;
             yield createOrUpdateComment(octokit, prNumber, textToWrite);
