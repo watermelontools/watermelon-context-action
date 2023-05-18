@@ -1,5 +1,10 @@
 # Watermelon Context GitHub Action
-[Install now](https://github.com/marketplace/actions/watermelon-context-action)
+
+> DEPRECATION WARNING
+> We now use the [Watermelon Context App](https://github.com/apps/watermelon-context), please install that.
+> This action will have no further development
+
+[Install now](https://github.com/apps/watermelon-context)
 
 [![Report an issue](https://img.shields.io/badge/-Report%20an%20issue-critical)](https://github.com/watermelontools/watermelon-context-action/issues/new)
 
@@ -12,6 +17,9 @@ Watermelon is your **AI-Powered** Code Review Toolbox. We improve the code revie
 Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message thread for a new PR. This way, we help you make the code review process faster and in a more informed way.
 
 ## Installation
+
+[Install now](https://github.com/apps/watermelon-context)
+
 Create a "watermelon.yml" file in ".github/workflows/". Then, copy and paste the following snippet into your .yml file
 
 ```
