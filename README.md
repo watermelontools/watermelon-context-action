@@ -18,7 +18,7 @@ Our GitHub Action indexes the most relevant PR, Jira ticket, and Slack message t
 
 ## Installation
 
-[Install now](https://github.com/apps/watermelon-context)
+[Install App now](https://github.com/apps/watermelon-context)
 
 Create a "watermelon.yml" file in ".github/workflows/". Then, copy and paste the following snippet into your .yml file
 
