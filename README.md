@@ -54,7 +54,7 @@ You can find the roadmap for this product [here](https://github.com/orgs/waterme
 
 The first feature for our alpha version is bringing the most relevant pieces of information from GitHub, Jira, and Slack for a new PR.
 
-Soon, we will generate a GPT-powered summary of this indexed context.
+We also generate a GPT-powered summary of this indexed context.
 
 ## Contributing - Paused for deprecation
 
