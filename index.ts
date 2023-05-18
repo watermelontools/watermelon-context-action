@@ -150,7 +150,9 @@ async function getContext() {
 
     let textToWrite = "## Context by Watermelon\n";
     textToWrite += "> Deprecation Warning";
+    textToWrite += `\n`;
     textToWrite += "> We now use the [Watermelon Context App](https://github.com/apps/watermelon-context), please install that.";
+    textToWrite += `\n`;
     textToWrite += "> This action will have no further development";
     textToWrite += `\n`;
 
